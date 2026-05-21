@@ -1,0 +1,127 @@
+:root {
+    --primary: #D64545;     /* Rojo intenso (Acción / Botones principales) */
+    --accent: #F28C28;      /* Naranja brillante (Destacados / Etiquetas) */
+    --secondary: #E0A100;   /* Amarillo oro (Filtros / Iconos) */
+    --background: #FFF4E6;  /* Crema muy claro (Fondo de toda la web) */
+    --text: #4A2C24;        /* Marrón oscuro (Lectura cómoda) */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.5;
+    padding: 1rem;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--primary);
+    margin-bottom: 2rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.nav-links a { text-decoration: none; color: var(--text); font-weight: bold; }
+
+.hero { text-align: center; margin-bottom: 3rem; }
+.hero-title { font-size: 2.5rem; color: var(--primary); margin: 1rem 0; }
+.hero-title em { color: var(--accent); font-style: normal; }
+
+.input-row {
+    display: flex;
+    flex-direction: column; /* Input arriba, botón abajo en móvil */
+    gap: 0.5rem;
+}
+
+/* Ingredientes y Tags */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    list-style: none;
+}
+
+.ingredient-tag {
+    background: var(--accent);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Inputs y Botones */
+.input-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.ingredient-input { 
+    flex: 1; 
+    padding: 0.8rem; 
+    border: 2px solid var(--secondary); 
+    border-radius: 8px; 
+    outline: none;
+}
+.ingrdient-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.ingrdient-btn:hover { background-color: #b33a3a; }
+
+.ingredient-input, .ingrdient-btn {
+    width: 100%; /* Botón y input ocupan todo el ancho en móvil */
+    padding: 1rem;
+}
+
+.filters { margin: 1.5rem 0; display: flex; flex-wrap: wrap; gap: 1rem; }
+.filter-chip { 
+    border: 1px solid var(--secondary); 
+    padding: 0.4rem 1rem; 
+    border-radius: 15px; 
+    cursor: pointer;
+}
+
+.quick-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.quick-tag { 
+    background: white; 
+    border: 1px solid var(--secondary); 
+    padding: 0.3rem 0.6rem; 
+    border-radius: 8px; 
+    cursor: pointer; 
+}
+
+@media (min-width: 768px) {
+
+    body { padding: 0 10%; }
+
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .nav-links {flex-direction: row;}
+
+    .input-row {
+        flex-direction: row;
+    }
+
+    .ingrdient-btn { width: auto; }
+
+    .hero-title { font-size: 3.5rem; }
+}

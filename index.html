@@ -1,11 +1,106 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Roulette</title>
-</head>
-<body>
-    
-</body>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Food Roulette</title>
+        <link rel="stylesheet" href="/css/style.css"">
+    </head>
+
+    <body>
+        <header class="header">
+            <nav class="navbar">
+                <span class="">Food Roulette</span>
+                <ul class="nav-links">
+                    <li><a href="#ingredients">Ingredientes</a></li>
+                    <li><a href="#roulette">Roulette</a></li>
+                    <li><a href="#about us">About us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <p class="hero-text">¿What do you have in the Fridge?</p>
+                <h1 class="hero-title">
+                    Turn your <em>ingredients</em><br/>into a delicious recipe
+                </h1>
+                <p class="hero-subtitle">
+                    Enter what you have available and we´ll recommend the best recipe instantly.
+                </p>
+            </section>
+
+            <section class="search-section">
+                <h2>Your Ingredients</h2>
+                <p>Type your ingredients and press <em>Enter</em> to add them</p>
+                <ul class="tags-container" id="tags-container" aria-label="Ingredients selected">   <!-- Los ingredientes inyectados por JS irán aquí como <li> --></ul>
+
+                <template id="ingredient-tag-template">
+                    <li class="ingredient-tag">
+                        <span class="tag-text"></span>
+                        <button class="remove-btn" aria-label="Eliminar ingrediente">X</button>
+                    </li>
+                </template> <!--Aca vamos a agregar los tags de ingredientes de forma dinámica con JS--> 
+
+                <form class="input-row">
+                    <input
+                        class="ingredient-input"
+                        id="ingredient-input"
+                        type="text"
+                        placeholder="Ej: onion, Chicken, lemon…"
+                    />
+                    <button class="ingredient-btn" id="ingredient-btn">+ Add</button>
+                </form>
+
+                <div class="filters">
+                    <span class="filters__label">Type of food:</span>
+                    <label class="filter-chip">
+                        <input type="checkbox" /> Fast
+                    </label>
+                    <label class="filter-chip">
+                        <input type="checkbox" checked /> Vegetarian
+                    </label>
+                    <label class="filter-chip">
+                        <input type="checkbox" /> TACC-FREE
+                    </label>
+                    <label class="filter-chip">
+                        <input type="checkbox" /> Saving
+                    </label>
+                </div>
+
+                <div class="quick-tags">
+                    <span class="quick-tags__label">Suggest:</span>
+                    <button class="quick-tag">🧅 Onion</button>
+                    <button class="quick-tag">🧄 Garlic</button>
+                    <button class="quick-tag">🍅 Tomatoe</button>
+                    <button class="quick-tag">🥚 Egg</button>
+                    <button class="quick-tag">🫙 Rice</button>
+                    <button class="quick-tag">🐔 Chicken</button>
+                    <button class="quick-tag">🧀 Cheese</button>
+                </div>
+
+                <button class="btn btn--primary" id="search-btn">
+                    Find Recipes
+                </button>
+            </section>
+
+            <section class="results-section" id="results-section">
+                <h2 class="results-title">Suggest Recipes</h2> 
+                <div id="recipes-grid" class="recipes-grid"><!-- JS inyectará aquí los resultados --></div>
+            </section>
+
+            <template id="recipe-template">
+                <article class="recipe-card">
+                    <h3 class="recipe-title"></h3>
+                    <p class="recipe-description"></p>
+                    <button class="recipe-btn">Show more</button>
+                </article>
+            </template>
+        </main>
+
+        <footer class="site-footer">
+            <p>Made with love and lots of ingredients · Food Roulette 2026</p>
+        </footer>
+    </body>
 </html>
