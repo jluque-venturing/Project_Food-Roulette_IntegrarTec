@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roulette — Food Roulette</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/roulette.css" />
+</head>
+<body>
+
+  <!-- ── Navegación ─────────────────────────────────────────── -->
+  <header class="header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="../index.html" class="nav-brand">Food Roulette</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="roulette.html" aria-current="page">Roulette</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ── Contenido principal ────────────────────────────────── -->
+  <main class="roulette-page">
+
+    <!-- Columna izquierda: ruleta -->
+    <section class="roulette-section" aria-label="Food Roulette">
+
+      <h1 class="roulette-title">Food Roulette</h1>
+
+      <div class="wheel-container" id="wheel-container">
+        <!-- Aguja fija apuntando hacia la ruleta -->
+        <div class="wheel-pointer" aria-hidden="true"></div>
+        <canvas
+          id="roulette-canvas"
+          width="400"
+          height="400"
+          role="img"
+          aria-label="Interactive food roulette wheel"
+        ></canvas>
+      </div>
+
+      <!-- Estado y conteo de recetas -->
+      <div class="roulette-status" aria-live="polite" aria-atomic="true">
+        <p id="roulette-hint" class="roulette-hint">Apply filters and spin the wheel</p>
+        <p id="roulette-count" class="roulette-count"></p>
+      </div>
+
+      <button
+        class="btn btn--spin"
+        id="spin-btn"
+        aria-label="Spin the roulette"
+      >
+        &#9654; Spin!
+      </button>
+
+      <p class="keyboard-hint" aria-hidden="true">
+        Press <kbd>Space</kbd> to spin · <kbd>F</kbd> to focus filters
+      </p>
+
+    </section>
+
+    <!-- Columna derecha: filtros -->
+    <aside class="filters-panel" id="filters-panel" aria-label="Roulette configuration">
+
+      <h2 class="filters-panel__title">Configure</h2>
+
+      <!-- Tipo de dieta -->
+      <div class="filter-group">
+        <label for="diet-type" class="filter-label">Diet</label>
+        <select id="diet-type" class="filter-select">
+          <option value="any">Any</option>
+          <option value="vegetarian">Vegetarian</option>
+          <option value="vegan">Vegan</option>
+          <option value="glutenFree">Gluten-free</option>
+        </select>
+      </div>
+
+      <!-- Tipo de plato -->
+      <div class="filter-group">
+        <label for="meal-type" class="filter-label">Meal type</label>
+        <select id="meal-type" class="filter-select">
+          <option value="any">Any</option>
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+          <option value="dessert">Dessert</option>
+        </select>
+      </div>
+
+      <!-- Tiempo máximo -->
+      <div class="filter-group">
+        <label for="max-time" class="filter-label">
+          Max time: <strong id="max-time-label">No limit</strong>
+        </label>
+        <input
+          type="range"
+          id="max-time"
+          class="filter-range"
+          min="0" max="120" step="10" value="0"
+          aria-valuetext="No limit"
+        />
+        <div class="range-markers" aria-hidden="true">
+          <span>0</span><span>30</span><span>60</span><span>90</span><span>120 min</span>
+        </div>
+      </div>
+
+      <!-- Ingredientes requeridos -->
+      <div class="filter-group">
+        <p class="filter-label" id="include-label">Include ingredients</p>
+        <div class="filter-input-row">
+          <input
+            type="text"
+            id="include-input"
+            class="filter-text-input"
+            placeholder="e.g. chicken, rice…"
+            aria-labelledby="include-label"
+          />
+          <button
+            type="button"
+            id="include-add-btn"
+            class="filter-add-btn"
+            aria-label="Add required ingredient"
+          >+</button>
+        </div>
+        <ul
+          id="include-tags"
+          class="tags-container"
+          aria-label="Required ingredients"
+        ></ul>
+      </div>
+
+      <!-- Ingredientes excluidos -->
+      <div class="filter-group">
+        <p class="filter-label" id="exclude-label">Exclude ingredients</p>
+        <div class="filter-input-row">
+          <input
+            type="text"
+            id="exclude-input"
+            class="filter-text-input"
+            placeholder="e.g. nuts, shellfish…"
+            aria-labelledby="exclude-label"
+          />
+          <button
+            type="button"
+            id="exclude-add-btn"
+            class="filter-add-btn"
+            aria-label="Add excluded ingredient"
+          >+</button>
+        </div>
+        <ul
+          id="exclude-tags"
+          class="tags-container"
+          aria-label="Excluded ingredients"
+        ></ul>
+      </div>
+
+      <!-- Cantidad de segmentos -->
+      <div class="filter-group">
+        <label for="options-count" class="filter-label">
+          Segments: <strong id="options-count-label">8</strong>
+        </label>
+        <input
+          type="range"
+          id="options-count"
+          class="filter-range"
+          min="2" max="12" value="8"
+        />
+        <div class="range-markers" aria-hidden="true">
+          <span>2</span><span>6</span><span>10</span><span>12</span>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn--secondary" id="apply-filters-btn">
+        Apply Filters
+      </button>
+
+    </aside>
+
+  </main>
+
+  <!-- ── Modal de resultado ──────────────────────────────────── -->
+  <div
+    class="result-modal"
+    id="result-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="result-name"
+    hidden
+  >
+    <!-- Backdrop translúcido -->
+    <div class="result-modal__backdrop" id="modal-backdrop"></div>
+
+    <!-- Tarjeta del resultado -->
+    <div class="result-modal__content">
+
+      <button
+        class="result-modal__close"
+        id="close-modal-btn"
+        aria-label="Close result"
+      >&#10005;</button>
+
+      <p class="result-modal__label">Today's food is…</p>
+      <h2 class="result-modal__name" id="result-name"></h2>
+
+      <!-- Imagen o emoji de la receta -->
+      <div class="result-modal__visual">
+        <img
+          id="result-image"
+          class="result-modal__image"
+          src=""
+          alt=""
+          hidden
+        />
+        <span
+          id="result-emoji-display"
+          class="result-modal__emoji"
+          aria-hidden="true"
+        ></span>
+      </div>
+
+      <p class="result-modal__time" id="result-time"></p>
+
+      <div class="result-modal__ingredients-section">
+        <p class="result-modal__ingredients-title">Ingredients:</p>
+        <ul id="result-ingredients" class="result-modal__ingredients"></ul>
+      </div>
+
+      <div class="result-modal__actions">
+        <button class="btn btn--secondary" id="spin-again-btn">
+          &#9654; Spin again
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Pie de página ──────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Made with love and lots of ingredients · Food Roulette 2026</p>
+  </footer>
+
+  <script type="module" src="../js/roulette.js"></script>
+
+</body>
+</html>
