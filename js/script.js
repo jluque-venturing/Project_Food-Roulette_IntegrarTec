@@ -1,5 +1,7 @@
 import { getRecipes, getIngredients, saveLocalRecipe } from './storage.js';
 import { applyFilters } from './filters.js';
+import { register, login, logout, getCurrentUser, addFavorite, removeFavorite, getFavorites, isFavorite } from './auth.js';
+import { initTheme, toggleTheme } from './theme.js';
 
 // ── Estado ───────────────────────────────────────────────────────
 
@@ -18,15 +20,36 @@ const recipesGrid = document.getElementById('recipes-grid');
 const recipeTemplate = document.getElementById('recipe-template');
 const resultsSection = document.getElementById('results-section');
 
+// Auth & Theme elements
+const themeToggle = document.getElementById('theme-toggle');
+const userBtn = document.getElementById('user-btn');
+const userDropdown = document.getElementById('user-dropdown');
+const loginOpenBtn = document.getElementById('login-open-btn');
+const favoritesBtn = document.getElementById('favorites-btn');
+const logoutBtn = document.getElementById('logout-btn');
+const authModal = document.getElementById('auth-modal');
+const authCloseBtn = document.getElementById('auth-close-btn');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const loginMessage = document.getElementById('login-message');
+const registerMessage = document.getElementById('register-message');
+const favoritesModal = document.getElementById('favorites-modal');
+const favoritesCloseBtn = document.getElementById('favorites-close-btn');
+const favoritesGrid = document.getElementById('favorites-grid');
+
 // ── Inicialización ───────────────────────────────────────────────
 
 async function init() {
+    initTheme();
     [allRecipes, ingredients] = await Promise.all([getRecipes(), getIngredients()]);
     setupIngredientInput();
     setupFilterChips();
     setupQuickTags();
     setupSearch();
+    setupAuth();
+    setupTheme();
     checkSharedRecipe();
+    updateUserUI();
 }
 
 // ── Autocomplete ─────────────────────────────────────────────────
@@ -196,6 +219,179 @@ function setupQuickTags() {
     });
 }
 
+// ── Autenticación y Favoritos ────────────────────────────────────
+
+function setupAuth() {
+    // Modal login/register
+    loginOpenBtn?.addEventListener('click', () => {
+        authModal.hidden = false;
+    });
+
+    authCloseBtn?.addEventListener('click', () => {
+        authModal.hidden = true;
+    });
+
+    authModal?.addEventListener('click', (e) => {
+        if (e.target === authModal) authModal.hidden = true;
+    });
+
+    // Tab switching
+    document.querySelectorAll('.auth-tab-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tab = btn.getAttribute('data-tab');
+            document.querySelectorAll('.auth-tab').forEach(t => t.hidden = true);
+            document.getElementById(`${tab}-tab`).hidden = false;
+            document.getElementById(`${tab}-message`).textContent = '';
+        });
+    });
+
+    // Login form
+    loginForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+        
+        const result = login(username, password);
+        if (result.success) {
+            loginMessage.textContent = '✓ ' + result.message;
+            loginMessage.classList.remove('error');
+            setTimeout(() => {
+                authModal.hidden = true;
+                loginForm.reset();
+                updateUserUI();
+            }, 500);
+        } else {
+            loginMessage.textContent = '✗ ' + result.error;
+            loginMessage.classList.add('error');
+        }
+    });
+
+    // Register form
+    registerForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
+        const confirm = document.getElementById('register-confirm').value;
+        
+        if (password !== confirm) {
+            registerMessage.textContent = '✗ Passwords do not match';
+            registerMessage.classList.add('error');
+            return;
+        }
+        
+        const result = register(username, password);
+        if (result.success) {
+            registerMessage.textContent = '✓ ' + result.message;
+            registerMessage.classList.remove('error');
+            setTimeout(() => {
+                document.querySelectorAll('.auth-tab').forEach(t => t.hidden = true);
+                document.getElementById('login-tab').hidden = false;
+                registerForm.reset();
+            }, 500);
+        } else {
+            registerMessage.textContent = '✗ ' + result.error;
+            registerMessage.classList.add('error');
+        }
+    });
+
+    // User menu
+    userBtn?.addEventListener('click', () => {
+        userDropdown.hidden = !userDropdown.hidden;
+    });
+
+    logoutBtn?.addEventListener('click', () => {
+        logout();
+        updateUserUI();
+        userDropdown.hidden = true;
+    });
+
+    // Favoritos modal
+    favoritesBtn?.addEventListener('click', () => {
+        favoritesModal.hidden = false;
+        renderFavorites();
+    });
+
+    favoritesCloseBtn?.addEventListener('click', () => {
+        favoritesModal.hidden = true;
+    });
+
+    favoritesModal?.addEventListener('click', (e) => {
+        if (e.target === favoritesModal) favoritesModal.hidden = true;
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.user-menu')) {
+            userDropdown.hidden = true;
+        }
+    });
+}
+
+function setupTheme() {
+    themeToggle?.addEventListener('click', () => {
+        const theme = toggleTheme();
+        themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Actualizar icono inicial
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+}
+
+function updateUserUI() {
+    const currentUser = getCurrentUser();
+    
+    if (currentUser) {
+        // Usuario logueado
+        loginOpenBtn.hidden = true;
+        favoritesBtn.hidden = false;
+        logoutBtn.hidden = false;
+        userBtn.textContent = '👤 ' + currentUser;
+    } else {
+        // Usuario no logueado
+        loginOpenBtn.hidden = false;
+        favoritesBtn.hidden = true;
+        logoutBtn.hidden = true;
+        userBtn.textContent = '👤';
+    }
+}
+
+function renderFavorites() {
+    const favorites = getFavorites();
+    favoritesGrid.innerHTML = '';
+
+    if (favorites.length === 0) {
+        const msg = document.createElement('p');
+        msg.className = 'no-results';
+        msg.textContent = 'No favorite recipes yet. Add some from your searches!';
+        favoritesGrid.appendChild(msg);
+        return;
+    }
+
+    favorites.forEach((recipe) => {
+        const fragment = recipeTemplate.content.cloneNode(true);
+        const article = fragment.querySelector('article');
+
+        article.querySelector('.recipe-title').textContent = recipe.name;
+        article.querySelector('.recipe-description').textContent =
+            `${recipe.emoji || '🍽️'} ${recipe.time} min · ${recipe.difficulty}`;
+
+        const favoriteBtn = article.querySelector('.favorite-btn');
+        favoriteBtn.textContent = '❤️';
+        favoriteBtn.addEventListener('click', () => {
+            removeFavorite(recipe.id);
+            renderFavorites();
+        });
+
+        article.querySelector('.recipe-btn').addEventListener('click', () =>
+            toggleDetails(article, recipe)
+        );
+
+        favoritesGrid.appendChild(fragment);
+    });
+}
+
 // ── Búsqueda y resultados ────────────────────────────────────────
 
 function readActiveFilters() {
@@ -247,6 +443,30 @@ function renderResults(recipes) {
         article.querySelector('.recipe-btn').addEventListener('click', () =>
             toggleDetails(article, recipe)
         );
+
+        // Botón de favoritos
+        const favoriteBtn = article.querySelector('.favorite-btn');
+        favoriteBtn.textContent = isFavorite(recipe.id) ? '❤️' : '♡';
+        favoriteBtn.addEventListener('click', () => {
+            const currentUser = getCurrentUser();
+            if (!currentUser) {
+                alert('Please login to save favorites');
+                loginOpenBtn.click();
+                return;
+            }
+
+            if (isFavorite(recipe.id)) {
+                removeFavorite(recipe.id);
+                favoriteBtn.textContent = '♡';
+            } else {
+                const result = addFavorite(recipe);
+                if (result.success) {
+                    favoriteBtn.textContent = '❤️';
+                } else {
+                    alert(result.error);
+                }
+            }
+        });
 
         recipesGrid.appendChild(fragment);
     });

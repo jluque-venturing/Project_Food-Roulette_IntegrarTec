@@ -21,8 +21,53 @@
                     <li><a href="about-us.html">About us</a></li>
                     <li><a href="contact.html" aria-current="page">Contact</a></li>
                 </ul>
+                <div class="nav-controls">
+                    <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">🌙</button>
+                    <div class="user-menu">
+                        <button class="user-btn" id="user-btn" title="User account">👤</button>
+                        <div class="user-dropdown" id="user-dropdown" hidden>
+                            <button class="user-menu-item" id="login-open-btn">Login</button>
+                            <button class="user-menu-item" id="favorites-btn" hidden>❤️ Favorites</button>
+                            <button class="user-menu-item" id="logout-btn" hidden>Logout</button>
+                        </div>
+                    </div>
+                </div>
             </nav>
         </header>
+
+        <!-- Modal de Login/Registro -->
+        <div class="modal" id="auth-modal" hidden>
+            <div class="modal-content">
+                <button class="modal-close" id="auth-close-btn">✕</button>
+                
+                <div class="auth-container">
+                    <!-- Pestaña de Login -->
+                    <div class="auth-tab" id="login-tab" data-tab="login">
+                        <h2>Login</h2>
+                        <form id="login-form">
+                            <input type="text" placeholder="Username" id="login-username" required />
+                            <input type="password" placeholder="Password" id="login-password" required />
+                            <button type="submit" class="btn btn--primary">Sign In</button>
+                        </form>
+                        <p class="auth-switch">Don't have an account? <button type="button" class="auth-tab-btn" data-tab="register">Register</button></p>
+                        <div class="auth-message" id="login-message"></div>
+                    </div>
+
+                    <!-- Pestaña de Registro -->
+                    <div class="auth-tab" id="register-tab" data-tab="register" hidden>
+                        <h2>Register</h2>
+                        <form id="register-form">
+                            <input type="text" placeholder="Username" id="register-username" required />
+                            <input type="password" placeholder="Password" id="register-password" required />
+                            <input type="password" placeholder="Confirm Password" id="register-confirm" required />
+                            <button type="submit" class="btn btn--primary">Create Account</button>
+                        </form>
+                        <p class="auth-switch">Already have an account? <button type="button" class="auth-tab-btn" data-tab="login">Login</button></p>
+                        <div class="auth-message" id="register-message"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- ── Contenido principal ────────────────────────────────── -->
         <main>
@@ -33,40 +78,42 @@
                 </p>
             </section>
 
-            <div class="contact-container">
+            <article class="contact-container">
                 <form class="contact-form" id="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name *</label>
-                        <input type="text" id="name" name="name" required placeholder="Your name" />
-                    </div>
+                    <fieldset>
+                        <legend class="sr-only">Contact Information</legend>
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name" />
+                        </div>
 
-                    <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" required placeholder="your@email.com" />
-                    </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com" />
+                        </div>
 
-                    <div class="form-group">
-                        <label for="subject">Subject *</label>
-                        <input type="text" id="subject" name="subject" required placeholder="How can we help?" />
-                    </div>
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" id="subject" name="subject" required placeholder="How can we help?" />
+                        </div>
 
-                    <div class="form-group">
-                        <label for="message">Message *</label>
-                        <textarea id="message" name="message" required placeholder="Tell us more..."></textarea>
-                    </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" required placeholder="Tell us more..."></textarea>
+                        </div>
 
-                    <button type="submit" class="btn btn--primary">Send Message</button>
+                        <button type="submit" class="btn btn--primary">Send Message</button>
+                    </fieldset>
                 </form>
 
-                <div class="contact-info">
-                    <div class="info-item">
+                <aside class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <address class="info-item">
                         <h3>Email</h3>
                         <p>
-                            <a href="mailto:hello@foodroulette.com" style="color: #ff6b6b; text-decoration: none;">
-                                hello@foodroulette.com
-                            </a>
+                            <a href="mailto:hello@foodroulette.com">hello@foodroulette.com</a>
                         </p>
-                    </div>
+                    </address>
 
                     <div class="info-item">
                         <h3>Follow Us</h3>
@@ -74,17 +121,17 @@
                             Connect with us on social media for recipes, tips, and inspiration!
                         </p>
                     </div>
-                </div>
-            </div>
+                </aside>
+            </article>
         </main>
 
         <!-- ── Pie de página ───────────────────────────────────────── -->
         <footer class="site-footer">
             <p>Made with love and lots of ingredients · Food Roulette 2026</p>
         </footer>
-
         <script type="module" src="../js/contact.js"></script>
-
+        <script type="module" src="../js/theme.js"></script>
+        <script type="module" src="../js/auth.js"></script>
     </body>
 
 </html>

@@ -73,6 +73,32 @@ function saveToHistory(item) {
   localStorage.setItem(KEYS.HISTORY, JSON.stringify(history.slice(0, 50)));
 }
 
+/**
+ * Obtiene comentarios guardados de una receta (por usuario)
+ */
+function getRecipeComments(recipeId) {
+  try {
+    const comments = JSON.parse(localStorage.getItem(`fr_comments_${recipeId}`) || '[]');
+    return comments;
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Agrega un comentario a una receta
+ */
+function saveRecipeComment(recipeId, author, text, rating = 5) {
+  const comments = getRecipeComments(recipeId);
+  comments.push({
+    author,
+    text,
+    rating,
+    date: new Date().toISOString(),
+  });
+  localStorage.setItem(`fr_comments_${recipeId}`, JSON.stringify(comments));
+}
+
 export {
   getRecipes,
   getIngredients,
@@ -81,4 +107,6 @@ export {
   saveFilters,
   getHistory,
   saveToHistory,
+  getRecipeComments,
+  saveRecipeComment,
 };
