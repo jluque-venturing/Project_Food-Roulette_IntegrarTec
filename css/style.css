@@ -404,6 +404,24 @@ body {
     align-items: center;
 }
 
+.lang-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.lang-toggle:hover {
+    cursor: pointer
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #F28C28;
+    color: #F28C28;
+}
+
 .theme-toggle,
 .user-btn {
     background: transparent;

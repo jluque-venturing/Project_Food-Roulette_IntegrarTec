@@ -440,9 +440,9 @@ function renderResults(recipes) {
         const fragment = recipeTemplate.content.cloneNode(true);
         const article = fragment.querySelector('article');
 
-        article.querySelector('.recipe-title').textContent = recipe.name;
+        article.querySelector('.recipe-title').textContent = t(recipe.name);
         article.querySelector('.recipe-description').textContent =
-            `${recipe.emoji || '🍽️'} ${recipe.time} min · ${recipe.difficulty}`;
+            `${recipe.emoji || '🍽️'} ${recipe.time} ${t('min')} · ${t(recipe.difficulty)}`;
 
         article.querySelector('.recipe-btn').addEventListener('click', () =>
             toggleDetails(article, recipe)
@@ -505,7 +505,7 @@ function toggleDetails(article, recipe) {
     ul.className = 'recipe-details__list';
     recipe.ingredients.forEach((ing) => {
         const li = document.createElement('li');
-        li.textContent = ing;
+        li.textContent = t(ing);
         ul.appendChild(li);
     });
     div.appendChild(ul);
@@ -520,7 +520,7 @@ function toggleDetails(article, recipe) {
         ol.className = 'recipe-details__steps';
         recipe.steps.forEach((step) => {
             const li = document.createElement('li');
-            li.textContent = step;
+            li.textContent = t(step);
             ol.appendChild(li);
         });
         div.appendChild(ol);
