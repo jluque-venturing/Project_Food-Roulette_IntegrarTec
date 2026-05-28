@@ -105,7 +105,7 @@
 }
 
 .roulette-hint {
-  color: var(--text);
+  color: var(--brown);
   font-size: 1rem;
 }
 
@@ -181,7 +181,7 @@
   color: var(--primary);
   margin: 0;
   padding-bottom: 0.75rem;
-  border-bottom: 2px solid var(--background);
+  border-bottom: 2px solid var(--light_Beige);
 }
 
 .filter-group {
@@ -193,15 +193,15 @@
 .filter-label {
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--text);
+  color: var(--brown);
 }
 
 .filter-select {
   padding: 0.5rem 0.75rem;
   border: 1.5px solid var(--secondary);
   border-radius: 8px;
-  background: var(--background);
-  color: var(--text);
+  background: var(--light_Beige);
+  color: var(--brown);
   font-size: 0.9rem;
   cursor: pointer;
 }
@@ -238,8 +238,8 @@
   border: 1.5px solid var(--secondary);
   border-radius: 8px;
   font-size: 0.88rem;
-  background: var(--background);
-  color: var(--text);
+  background: var(--light_Beige);
+  color: var(--brown);
 }
 
 .filter-text-input:focus {
@@ -251,7 +251,7 @@
   width: 36px;
   height: 36px;
   background: var(--secondary);
-  color: var(--text);
+  color: var(--brown);
   border: none;
   border-radius: 8px;
   font-size: 1.2rem;
@@ -305,7 +305,7 @@
 .result-modal__content {
   position: relative;
   z-index: 1;
-  background: var(--background);
+  background: var(--light_Beige);
   border-radius: 20px;
   padding: 2rem 1.75rem;
   max-width: 480px;
@@ -329,11 +329,11 @@
   width: 36px;
   height: 36px;
   background: transparent;
-  border: 1.5px solid var(--text);
+  border: 1.5px solid var(--brown);
   border-radius: 50%;
   cursor: pointer;
   font-size: 1rem;
-  color: var(--text);
+  color: var(--brown);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -396,7 +396,7 @@
 /* Info */
 .result-modal__time {
   font-size: 0.95rem;
-  color: var(--text);
+  color: var(--brown);
   margin-bottom: 0.75rem;
   font-weight: 600;
 }
@@ -404,7 +404,7 @@
 .result-modal__ingredients-title {
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--text);
+  color: var(--brown);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
@@ -425,7 +425,7 @@
   border-radius: 20px;
   padding: 0.25rem 0.7rem;
   font-size: 0.82rem;
-  color: var(--text);
+  color: var(--brown);
 }
 
 /* Acciones del modal */
