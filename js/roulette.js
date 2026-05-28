@@ -1,4 +1,7 @@
 import { getRecipes, getIngredients, getFilters, saveFilters, saveToHistory } from './storage.js';
+import { initLang } from './lang.js';
+import { t } from './translator/translator.js';
+initLang();
 import { applyFilters } from './filters.js';
 import { searchByName } from './api.js';
 
@@ -114,7 +117,7 @@ class RouletteWheel {
       // Truncar por ancho de píxeles reales para que el texto nunca toque el hub
       // availWidth = distancia desde el borde del segmento hasta el hub + padding
       const availWidth = segR - 10 - 27 - 8;
-      let label = seg.name;
+      let label = t(seg.name);
       if (ctx.measureText(label).width > availWidth) {
         while (label.length > 1 && ctx.measureText(label + '…').width > availWidth) {
           label = label.slice(0, -1);
@@ -149,8 +152,8 @@ class RouletteWheel {
     ctx.fillStyle = '#4A2C24';
     ctx.textAlign = 'center';
     ctx.font      = '15px Segoe UI, system-ui, sans-serif';
-    ctx.fillText('Apply filters to', cx, cy - 10);
-    ctx.fillText('see options', cx, cy + 14);
+    ctx.fillText(t('Apply filters to'), cx, cy - 10);
+    ctx.fillText(t('see options'), cx, cy + 14);
   }
 
   spin() {
@@ -208,12 +211,14 @@ function createAutocomplete(inputEl, itemsList) {
     if (!q) { hide(); return; }
 
     const matches = itemsList
-      .filter(item => item.toLowerCase().includes(q))
+      .filter(item => t(item).toLowerCase().includes(q) || item.toLowerCase().includes(q))
       .sort((a, b) => {
         // Primero los que empiezan con la query, luego los que la contienen
-        const aS = a.toLowerCase().startsWith(q) ? 0 : 1;
-        const bS = b.toLowerCase().startsWith(q) ? 0 : 1;
-        return aS - bS || a.localeCompare(b);
+        const aT = t(a).toLowerCase();
+        const bT = t(b).toLowerCase();
+        const aS = (aT.startsWith(q) || a.toLowerCase().startsWith(q)) ? 0 : 1;
+        const bS = (bT.startsWith(q) || b.toLowerCase().startsWith(q)) ? 0 : 1;
+        return aS - bS || aT.localeCompare(bT);
       })
       .slice(0, 8);
 
@@ -226,24 +231,26 @@ function createAutocomplete(inputEl, itemsList) {
       const li = document.createElement('li');
       li.className = 'autocomplete-item';
       li.setAttribute('role', 'option');
+      li.dataset.value = item; // clave en inglés para filtrar
 
-      // Highlight del fragmento coincidente sin usar innerHTML
-      const idx = item.toLowerCase().indexOf(q);
+      // Highlight sobre el nombre traducido
+      const display = t(item);
+      const idx = display.toLowerCase().indexOf(q);
       if (idx !== -1) {
-        li.appendChild(document.createTextNode(item.slice(0, idx)));
+        li.appendChild(document.createTextNode(display.slice(0, idx)));
         const mark = document.createElement('mark');
         mark.className   = 'autocomplete-match';
-        mark.textContent = item.slice(idx, idx + q.length);
+        mark.textContent = display.slice(idx, idx + q.length);
         li.appendChild(mark);
-        li.appendChild(document.createTextNode(item.slice(idx + q.length)));
+        li.appendChild(document.createTextNode(display.slice(idx + q.length)));
       } else {
-        li.textContent = item;
+        li.textContent = display;
       }
 
       // mousedown en vez de click para que el blur del input no cierre el dropdown
       li.addEventListener('mousedown', (e) => {
         e.preventDefault();
-        inputEl.value = item;
+        inputEl.value = item; // siempre la clave inglesa para que los filtros funcionen
         hide();
         inputEl.dispatchEvent(new Event('autocomplete-select', { bubbles: true }));
       });
@@ -257,7 +264,7 @@ function createAutocomplete(inputEl, itemsList) {
   function setActive(idx) {
     const items = [...dropdown.querySelectorAll('.autocomplete-item')];
     items.forEach((li, i) => li.classList.toggle('active', i === idx));
-    if (idx >= 0 && idx < items.length) inputEl.value = items[idx].textContent;
+    if (idx >= 0 && idx < items.length) inputEl.value = items[idx].dataset.value;
   }
 
   function hide() {
@@ -311,13 +318,14 @@ function createTagManager(listEl, inputEl, addBtnEl, ingredientsList = []) {
     li.setAttribute('data-value', v);
 
     const span = document.createElement('span');
-    span.className   = 'tag-text';
-    span.textContent = v;
+    span.className = 'tag-text';
+    span.setAttribute('data-translate', v);
+    span.textContent = t(v);
 
     const btn = document.createElement('button');
     btn.className   = 'remove-btn';
     btn.textContent = '×';
-    btn.setAttribute('aria-label', `Remove ${v}`);
+    btn.setAttribute('aria-label', `${t('Remove')} ${t(v)}`);
     btn.addEventListener('click', () => { tags.delete(v); li.remove(); });
 
     li.append(span, btn);
@@ -402,11 +410,12 @@ function updateStatus(count) {
   const hintEl  = document.getElementById('roulette-hint');
   const countEl = document.getElementById('roulette-count');
   if (count === 0) {
-    if (hintEl)  hintEl.textContent  = 'Try relaxing the filters.';
-    if (countEl) countEl.textContent = 'No recipes match.';
+    if (hintEl)  hintEl.textContent  = t('Try relaxing the filters.');
+    if (countEl) countEl.textContent = t('No recipes match.');
   } else {
-    if (hintEl)  hintEl.textContent  = 'Ready to spin!';
-    if (countEl) countEl.textContent = `${count} recipe${count !== 1 ? 's' : ''} on the wheel`;
+    if (hintEl)  hintEl.textContent  = t('Ready to spin!');
+    const label = count === 1 ? 'recipe on the wheel' : 'recipes on the wheel';
+    if (countEl) countEl.textContent = `${count} ${t(label)}`;
   }
 }
 
@@ -419,7 +428,7 @@ function setupFilters() {
   maxTimeEl?.addEventListener('input', () => {
     const val = parseInt(maxTimeEl.value) || 0;
     const lbl = document.getElementById('max-time-label');
-    if (lbl) lbl.textContent = val === 0 ? 'No limit' : `${val} min`;
+    if (lbl) lbl.textContent = val === 0 ? t('No limit') : `${val} ${t('min')}`;
   });
   maxTimeEl?.addEventListener('change', updateWheel);
 
@@ -482,9 +491,9 @@ function showResult(recipe) {
 
   saveToHistory(recipe);
 
-  document.getElementById('result-name').textContent = recipe.name;
+  document.getElementById('result-name').textContent = t(recipe.name);
   document.getElementById('result-time').textContent =
-    recipe.time ? `⏱ ${recipe.time} minutes` : '';
+    recipe.time ? `⏱ ${recipe.time} ${t('minutes')}` : '';
 
   const img     = document.getElementById('result-image');
   const emojiEl = document.getElementById('result-emoji-display');
@@ -516,7 +525,7 @@ function showResult(recipe) {
   ingList.innerHTML = '';
   recipe.ingredients.slice(0, 8).forEach((ing) => {
     const li = document.createElement('li');
-    li.textContent = ing;
+    li.textContent = t(ing);
     ingList.appendChild(li);
   });
 

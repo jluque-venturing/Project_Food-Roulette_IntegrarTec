@@ -1,4 +1,7 @@
 import { initTheme, toggleTheme } from './theme.js';
+import { initLang } from './lang.js';
+import { t } from './translator/translator.js';
+initLang();
 import { logout, getCurrentUser, login, register } from './auth.js';
 
 // Inicializar tema
@@ -157,7 +160,7 @@ const form = document.getElementById('contact-form');
 if (form) {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-        alert('Thank you for your message! We\'ll get back to you soon.');
+        alert(t('Thank you for your message! We\'ll get back to you soon.'));
         form.reset();
     });
 }

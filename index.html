@@ -12,19 +12,20 @@
             <nav class="navbar">
                 <a href="index.html" class="nav-brand">Food Roulette</a>
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="pages/roulette.html">Roulette</a></li>
-                    <li><a href="pages/about-us.html">About us</a></li>
-                    <li><a href="pages/contact.html">Contact</a></li>
+                    <li><a href="index.html" data-translate>Home</a></li>
+                    <li><a href="pages/roulette.html" data-translate>Roulette</a></li>
+                    <li><a href="pages/about-us.html" data-translate>About us</a></li>
+                    <li><a href="pages/contact.html" data-translate>Contact</a></li>
                 </ul>
                 <div class="nav-controls">
-                    <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">🌙</button>
+                    <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" data-translate-title="Toggle dark mode">🌙</button>
+                    <button class="lang-toggle" id="lang-toggle" title="Change language" data-translate-title="Change language">ES</button>
                     <div class="user-menu">
-                        <button class="user-btn" id="user-btn" title="User account">👤</button>
+                        <button class="user-btn" id="user-btn" title="User account" data-translate-title="User account">👤</button>
                         <div class="user-dropdown" id="user-dropdown" hidden>
-                            <button class="user-menu-item" id="login-open-btn">Login</button>
-                            <button class="user-menu-item" id="favorites-btn" hidden>❤️ Favorites</button>
-                            <button class="user-menu-item" id="logout-btn" hidden>Logout</button>
+                            <button class="user-menu-item" id="login-open-btn" data-translate>Login</button>
+                            <button class="user-menu-item" id="favorites-btn" hidden data-translate>❤️ Favorites</button>
+                            <button class="user-menu-item" id="logout-btn" hidden data-translate>Logout</button>
                         </div>
                     </div>
                 </div>
@@ -35,15 +36,15 @@
         <div class="modal" id="auth-modal" hidden>
             <div class="modal-content">
                 <button class="modal-close" id="auth-close-btn">✕</button>
-                
+
                 <div class="auth-container">
                     <!-- Pestaña de Login -->
                     <div class="auth-tab" id="login-tab" data-tab="login">
-                        <h2>Login</h2>
+                        <h2 data-translate>Login</h2>
                         <form id="login-form">
-                            <input type="text" placeholder="Username" id="login-username" required />
-                            <input type="password" placeholder="Password" id="login-password" required />
-                            <button type="submit" class="btn btn--primary">Sign In</button>
+                            <input type="text" placeholder="Username" id="login-username" required data-translate />
+                            <input type="password" placeholder="Password" id="login-password" required data-translate />
+                            <button type="submit" class="btn btn--primary" data-translate>Sign In</button>
                         </form>
                         <p class="auth-switch">Don't have an account? <button type="button" class="auth-tab-btn" data-tab="register">Register</button></p>
                         <div class="auth-message" id="login-message"></div>
@@ -51,12 +52,12 @@
 
                     <!-- Pestaña de Registro -->
                     <div class="auth-tab" id="register-tab" data-tab="register" hidden>
-                        <h2>Register</h2>
+                        <h2 data-translate>Register</h2>
                         <form id="register-form">
-                            <input type="text" placeholder="Username" id="register-username" required />
-                            <input type="password" placeholder="Password" id="register-password" required />
-                            <input type="password" placeholder="Confirm Password" id="register-confirm" required />
-                            <button type="submit" class="btn btn--primary">Create Account</button>
+                            <input type="text" placeholder="Username" id="register-username" required data-translate />
+                            <input type="password" placeholder="Password" id="register-password" required data-translate />
+                            <input type="password" placeholder="Confirm Password" id="register-confirm" required data-translate />
+                            <button type="submit" class="btn btn--primary" data-translate>Create Account</button>
                         </form>
                         <p class="auth-switch">Already have an account? <button type="button" class="auth-tab-btn" data-tab="login">Login</button></p>
                         <div class="auth-message" id="register-message"></div>
@@ -69,25 +70,25 @@
         <div class="modal" id="favorites-modal" hidden>
             <div class="modal-content modal-large">
                 <button class="modal-close" id="favorites-close-btn">✕</button>
-                <h2>My Favorite Recipes</h2>
+                <h2 data-translate>My Favorite Recipes</h2>
                 <div id="favorites-grid" class="recipes-grid"><!-- JS inyectará favoritos aquí --></div>
             </div>
         </div>
 
         <main>
             <section class="hero">
-                <p class="hero-text">¿What do you have in the Fridge?</p>
+                <p class="hero-text" data-translate>¿What do you have in the Fridge?</p>
                 <h1 class="hero-title">
-                    Turn your <em>ingredients</em><br/>into a delicious recipe
+                    <span data-translate>Turn your</span> <em data-translate>ingredients</em><br/><span data-translate>into a delicious recipe</span>
                 </h1>
-                <p class="hero-subtitle">
+                <p class="hero-subtitle" data-translate>
                     Enter what you have available and we´ll recommend the best recipe instantly.
                 </p>
             </section>
 
             <section class="search-section">
-                <h2>Your Ingredients</h2>
-                <p>Type your ingredients and press <em>Enter</em> to add them</p>
+                <h2 data-translate>Your Ingredients</h2>
+                <p data-translate>Type your ingredients and press Enter to add them</p>
                 <ul class="tags-container" id="tags-container" aria-label="Ingredients selected">   <!-- Los ingredientes inyectados por JS irán aquí como <li> --></ul>
 
                 <template id="ingredient-tag-template">
@@ -95,7 +96,7 @@
                         <span class="tag-text"></span>
                         <button class="remove-btn" aria-label="Eliminar ingrediente">X</button>
                     </li>
-                </template> <!--Aca vamos a agregar los tags de ingredientes de forma dinámica con JS--> 
+                </template> <!--Aca vamos a agregar los tags de ingredientes de forma dinámica con JS-->
 
                 <form class="input-row">
                     <input
@@ -103,44 +104,45 @@
                         id="ingredient-input"
                         type="text"
                         placeholder="Ej: onion, Chicken, lemon…"
+                        data-translate
                     />
-                    <button class="ingredient-btn" id="ingredient-btn">+ Add</button>
+                    <button class="ingredient-btn" id="ingredient-btn" data-translate>+ Add</button>
                 </form>
 
                 <div class="filters">
-                    <span class="filters__label">Type of food:</span>
+                    <span class="filters__label" data-translate>Type of food:</span>
                     <label class="filter-chip">
-                        <input type="checkbox" /> Fast
+                        <input type="checkbox" /> <span data-translate>Fast</span>
                     </label>
                     <label class="filter-chip">
-                        <input type="checkbox" checked /> Vegetarian
+                        <input type="checkbox" checked /> <span data-translate>Vegetarian</span>
                     </label>
                     <label class="filter-chip">
-                        <input type="checkbox" /> TACC-FREE
+                        <input type="checkbox" /> <span data-translate>TACC-FREE</span>
                     </label>
                     <label class="filter-chip">
-                        <input type="checkbox" /> Saving
+                        <input type="checkbox" /> <span data-translate>Saving</span>
                     </label>
                 </div>
 
                 <div class="quick-tags">
-                    <span class="quick-tags__label">Suggest:</span>
-                    <button class="quick-tag">🧅 Onion</button>
-                    <button class="quick-tag">🧄 Garlic</button>
-                    <button class="quick-tag">🍅 Tomatoe</button>
-                    <button class="quick-tag">🥚 Egg</button>
-                    <button class="quick-tag">🫙 Rice</button>
-                    <button class="quick-tag">🐔 Chicken</button>
-                    <button class="quick-tag">🧀 Cheese</button>
+                    <span class="quick-tags__label" data-translate>Suggest:</span>
+                    <button class="quick-tag" data-translate>🧅 Onion</button>
+                    <button class="quick-tag" data-translate>🧄 Garlic</button>
+                    <button class="quick-tag" data-translate>🍅 Tomatoe</button>
+                    <button class="quick-tag" data-translate>🥚 Egg</button>
+                    <button class="quick-tag" data-translate>🫙 Rice</button>
+                    <button class="quick-tag" data-translate>🐔 Chicken</button>
+                    <button class="quick-tag" data-translate>🧀 Cheese</button>
                 </div>
 
-                <button class="btn btn--primary" id="search-btn">
+                <button class="btn btn--primary" id="search-btn" data-translate>
                     Find Recipes
                 </button>
             </section>
 
             <section class="results-section" id="results-section">
-                <h2 class="results-title">Suggest Recipes</h2> 
+                <h2 class="results-title" data-translate>Suggest Recipes</h2>
                 <div id="recipes-grid" class="recipes-grid"><!-- JS inyectará aquí los resultados --></div>
             </section>
 
@@ -157,7 +159,7 @@
         </main>
 
         <footer class="site-footer">
-            <p>Made with love and lots of ingredients · Food Roulette 2026</p>
+            <p data-translate>Made with love and lots of ingredients · Food Roulette 2026</p>
         </footer>
     <script type="module" src="js/script.js"></script>
     </body>

@@ -14,19 +14,20 @@
     <nav class="navbar" aria-label="Main navigation">
       <a href="../index.html" class="nav-brand">Food Roulette</a>
       <ul class="nav-links">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="roulette.html" aria-current="page">Roulette</a></li>
-        <li><a href="about-us.html">About us</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="../index.html" data-translate>Home</a></li>
+        <li><a href="roulette.html" aria-current="page" data-translate>Roulette</a></li>
+        <li><a href="about-us.html" data-translate>About us</a></li>
+        <li><a href="contact.html" data-translate>Contact</a></li>
       </ul>
       <div class="nav-controls">
-        <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">🌙</button>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" data-translate-title="Toggle dark mode">🌙</button>
+        <button class="lang-toggle" id="lang-toggle" title="Change language" data-translate-title="Change language">ES</button>
         <div class="user-menu">
-          <button class="user-btn" id="user-btn" title="User account">👤</button>
+          <button class="user-btn" id="user-btn" title="User account" data-translate-title="User account">👤</button>
           <div class="user-dropdown" id="user-dropdown" hidden>
-            <button class="user-menu-item" id="login-open-btn">Login</button>
-            <button class="user-menu-item" id="favorites-btn" hidden>❤️ Favorites</button>
-            <button class="user-menu-item" id="logout-btn" hidden>Logout</button>
+            <button class="user-menu-item" id="login-open-btn" data-translate>Login</button>
+            <button class="user-menu-item" id="favorites-btn" hidden data-translate>❤️ Favorites</button>
+            <button class="user-menu-item" id="logout-btn" hidden data-translate>Logout</button>
           </div>
         </div>
       </div>
@@ -37,15 +38,15 @@
   <div class="modal" id="auth-modal" hidden>
     <div class="modal-content">
       <button class="modal-close" id="auth-close-btn">✕</button>
-      
+
       <div class="auth-container">
         <!-- Pestaña de Login -->
         <div class="auth-tab" id="login-tab" data-tab="login">
-          <h2>Login</h2>
+          <h2 data-translate>Login</h2>
           <form id="login-form">
-            <input type="text" placeholder="Username" id="login-username" required />
-            <input type="password" placeholder="Password" id="login-password" required />
-            <button type="submit" class="btn btn--primary">Sign In</button>
+            <input type="text" placeholder="Username" id="login-username" required data-translate />
+            <input type="password" placeholder="Password" id="login-password" required data-translate />
+            <button type="submit" class="btn btn--primary" data-translate>Sign In</button>
           </form>
           <p class="auth-switch">Don't have an account? <button type="button" class="auth-tab-btn" data-tab="register">Register</button></p>
           <div class="auth-message" id="login-message"></div>
@@ -53,12 +54,12 @@
 
         <!-- Pestaña de Registro -->
         <div class="auth-tab" id="register-tab" data-tab="register" hidden>
-          <h2>Register</h2>
+          <h2 data-translate>Register</h2>
           <form id="register-form">
-            <input type="text" placeholder="Username" id="register-username" required />
-            <input type="password" placeholder="Password" id="register-password" required />
-            <input type="password" placeholder="Confirm Password" id="register-confirm" required />
-            <button type="submit" class="btn btn--primary">Create Account</button>
+            <input type="text" placeholder="Username" id="register-username" required data-translate />
+            <input type="password" placeholder="Password" id="register-password" required data-translate />
+            <input type="password" placeholder="Confirm Password" id="register-confirm" required data-translate />
+            <button type="submit" class="btn btn--primary" data-translate>Create Account</button>
           </form>
           <p class="auth-switch">Already have an account? <button type="button" class="auth-tab-btn" data-tab="login">Login</button></p>
           <div class="auth-message" id="register-message"></div>
@@ -73,7 +74,7 @@
     <!-- Columna izquierda: ruleta -->
     <section class="roulette-section" aria-label="Food Roulette">
 
-      <h1 class="roulette-title">Food Roulette</h1>
+      <h1 class="roulette-title" data-translate>Food Roulette</h1>
 
       <div class="wheel-container" id="wheel-container">
         <!-- Aguja fija apuntando hacia la ruleta -->
@@ -89,7 +90,7 @@
 
       <!-- Estado y conteo de recetas -->
       <output class="roulette-status" aria-live="polite" aria-atomic="true">
-        <p id="roulette-hint" class="roulette-hint">Apply filters and spin the wheel</p>
+        <p id="roulette-hint" class="roulette-hint" data-translate>Apply filters and spin the wheel</p>
         <p id="roulette-count" class="roulette-count"></p>
       </output>
 
@@ -97,12 +98,13 @@
         class="btn btn--spin"
         id="spin-btn"
         aria-label="Spin the roulette"
+        data-translate
       >
-        &#9654; Spin!
+        ▶ Spin!
       </button>
 
       <p class="keyboard-hint" aria-hidden="true">
-        Press <kbd>Space</kbd> to spin · <kbd>F</kbd> to focus filters
+        <span data-translate>Press</span> <kbd data-translate>Space</kbd> <span data-translate>to spin ·</span> <kbd>F</kbd> <span data-translate>to focus filters</span>
       </p>
 
     </section>
@@ -110,35 +112,35 @@
     <!-- Columna derecha: filtros -->
     <aside class="filters-panel" id="filters-panel" aria-label="Roulette configuration">
 
-      <h2 class="filters-panel__title">Configure</h2>
+      <h2 class="filters-panel__title" data-translate>Configure</h2>
 
       <!-- Tipo de dieta -->
       <div class="filter-group">
-        <label for="diet-type" class="filter-label">Diet</label>
+        <label for="diet-type" class="filter-label" data-translate>Diet</label>
         <select id="diet-type" class="filter-select">
-          <option value="any">Any</option>
-          <option value="vegetarian">Vegetarian</option>
-          <option value="vegan">Vegan</option>
-          <option value="glutenFree">Gluten-free</option>
+          <option value="any" data-translate>Any</option>
+          <option value="vegetarian" data-translate>Vegetarian</option>
+          <option value="vegan" data-translate>Vegan</option>
+          <option value="glutenFree" data-translate>Gluten-free</option>
         </select>
       </div>
 
       <!-- Tipo de plato -->
       <div class="filter-group">
-        <label for="meal-type" class="filter-label">Meal type</label>
+        <label for="meal-type" class="filter-label" data-translate>Meal type</label>
         <select id="meal-type" class="filter-select">
-          <option value="any">Any</option>
-          <option value="breakfast">Breakfast</option>
-          <option value="lunch">Lunch</option>
-          <option value="dinner">Dinner</option>
-          <option value="dessert">Dessert</option>
+          <option value="any" data-translate>Any</option>
+          <option value="breakfast" data-translate>Breakfast</option>
+          <option value="lunch" data-translate>Lunch</option>
+          <option value="dinner" data-translate>Dinner</option>
+          <option value="dessert" data-translate>Dessert</option>
         </select>
       </div>
 
       <!-- Tiempo máximo -->
       <div class="filter-group">
         <label for="max-time" class="filter-label">
-          Max time: <strong id="max-time-label">No limit</strong>
+          <span data-translate>Max time:</span> <strong id="max-time-label" data-translate>No limit</strong>
         </label>
         <input
           type="range"
@@ -154,7 +156,7 @@
 
       <!-- Ingredientes requeridos -->
       <div class="filter-group">
-        <p class="filter-label" id="include-label">Include ingredients</p>
+        <p class="filter-label" id="include-label" data-translate>Include ingredients</p>
         <div class="filter-input-row">
           <input
             type="text"
@@ -162,6 +164,7 @@
             class="filter-text-input"
             placeholder="e.g. chicken, rice…"
             aria-labelledby="include-label"
+            data-translate
           />
           <button
             type="button"
@@ -179,7 +182,7 @@
 
       <!-- Ingredientes excluidos -->
       <div class="filter-group">
-        <p class="filter-label" id="exclude-label">Exclude ingredients</p>
+        <p class="filter-label" id="exclude-label" data-translate>Exclude ingredients</p>
         <div class="filter-input-row">
           <input
             type="text"
@@ -187,6 +190,7 @@
             class="filter-text-input"
             placeholder="e.g. nuts, shellfish…"
             aria-labelledby="exclude-label"
+            data-translate
           />
           <button
             type="button"
@@ -205,7 +209,7 @@
       <!-- Cantidad de segmentos -->
       <div class="filter-group">
         <label for="options-count" class="filter-label">
-          Segments: <strong id="options-count-label">8</strong>
+          <span data-translate>Segments:</span> <strong id="options-count-label">8</strong>
         </label>
         <input
           type="range"
@@ -218,7 +222,7 @@
         </div>
       </div>
 
-      <button type="button" class="btn btn--secondary" id="apply-filters-btn">
+      <button type="button" class="btn btn--secondary" id="apply-filters-btn" data-translate>
         Apply Filters
       </button>
 
@@ -247,7 +251,7 @@
         aria-label="Close result"
       >&#10005;</button>
 
-      <p class="result-modal__label">Today's food is…</p>
+      <p class="result-modal__label" data-translate>Today's food is…</p>
       <h2 class="result-modal__name" id="result-name"></h2>
 
       <!-- Imagen o emoji de la receta -->
@@ -269,13 +273,13 @@
       <p class="result-modal__time" id="result-time"></p>
 
       <div class="result-modal__ingredients-section">
-        <p class="result-modal__ingredients-title">Ingredients:</p>
+        <p class="result-modal__ingredients-title" data-translate>Ingredients:</p>
         <ul id="result-ingredients" class="result-modal__ingredients"></ul>
       </div>
 
       <div class="result-modal__actions">
-        <button class="btn btn--secondary" id="spin-again-btn">
-          &#9654; Spin again
+        <button class="btn btn--secondary" id="spin-again-btn" data-translate>
+          ▶ Spin again
         </button>
       </div>
 
@@ -284,7 +288,7 @@
 
   <!-- ── Pie de página ──────────────────────────────────────── -->
   <footer class="site-footer">
-    <p>Made with love and lots of ingredients · Food Roulette 2026</p>
+    <p data-translate>Made with love and lots of ingredients · Food Roulette 2026</p>
   </footer>
 
   <script type="module" src="../js/roulette.js"></script>

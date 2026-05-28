@@ -45,4 +45,13 @@ export function translatePage() {
             element.textContent = t(key);
         }
     });
+
+    document.querySelectorAll('[data-translate-title]').forEach(element => {
+        let key = element.getAttribute('data-translate-title');
+        if (!key) {
+            key = element.title;
+            element.setAttribute('data-translate-title', key);
+        }
+        element.title = t(key);
+    });
 }

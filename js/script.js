@@ -2,6 +2,9 @@ import { getRecipes, getIngredients, saveLocalRecipe } from './storage.js';
 import { applyFilters } from './filters.js';
 import { register, login, logout, getCurrentUser, addFavorite, removeFavorite, getFavorites, isFavorite } from './auth.js';
 import { initTheme, toggleTheme } from './theme.js';
+import { initLang } from './lang.js';
+import { t } from './translator/translator.js';
+initLang();
 
 // ── Estado ───────────────────────────────────────────────────────
 
@@ -170,7 +173,7 @@ function renderTag(v) {
     li.querySelector('.tag-text').textContent = v;
 
     const removeBtn = li.querySelector('.remove-btn');
-    removeBtn.setAttribute('aria-label', `Remove ${v}`);
+    removeBtn.setAttribute('aria-label', `${t('Remove')} ${v}`);
     removeBtn.addEventListener('click', () => {
         removeIngredient(v);
         li.remove();
@@ -275,7 +278,7 @@ function setupAuth() {
         const confirm = document.getElementById('register-confirm').value;
         
         if (password !== confirm) {
-            registerMessage.textContent = '✗ Passwords do not match';
+            registerMessage.textContent = `✗ ${t('Passwords do not match')}`;
             registerMessage.classList.add('error');
             return;
         }
@@ -364,7 +367,7 @@ function renderFavorites() {
     if (favorites.length === 0) {
         const msg = document.createElement('p');
         msg.className = 'no-results';
-        msg.textContent = 'No favorite recipes yet. Add some from your searches!';
+        msg.textContent = t('No favorite recipes yet. Add some from your searches!');
         favoritesGrid.appendChild(msg);
         return;
     }
@@ -379,6 +382,7 @@ function renderFavorites() {
 
         const favoriteBtn = article.querySelector('.favorite-btn');
         favoriteBtn.textContent = '❤️';
+        favoriteBtn.title = t('Add to favorites');
         favoriteBtn.addEventListener('click', () => {
             removeFavorite(recipe.id);
             renderFavorites();
@@ -427,7 +431,7 @@ function renderResults(recipes) {
     if (recipes.length === 0) {
         const msg = document.createElement('p');
         msg.className = 'no-results';
-        msg.textContent = 'No recipes found. Try different ingredients or filters.';
+        msg.textContent = t('No recipes found. Try different ingredients or filters.');
         recipesGrid.appendChild(msg);
         return;
     }
@@ -447,10 +451,11 @@ function renderResults(recipes) {
         // Botón de favoritos
         const favoriteBtn = article.querySelector('.favorite-btn');
         favoriteBtn.textContent = isFavorite(recipe.id) ? '❤️' : '♡';
+        favoriteBtn.title = t('Add to favorites');
         favoriteBtn.addEventListener('click', () => {
             const currentUser = getCurrentUser();
             if (!currentUser) {
-                alert('Please login to save favorites');
+                alert(t('Please login to save favorites'));
                 loginOpenBtn.click();
                 return;
             }
@@ -476,7 +481,7 @@ function toggleDetails(article, recipe) {
     const existing = article.querySelector('.recipe-details');
     if (existing) {
         existing.remove();
-        article.querySelector('.recipe-btn').textContent = 'Show more';
+        article.querySelector('.recipe-btn').textContent = t('Show more');
         return;
     }
 
@@ -493,7 +498,7 @@ function toggleDetails(article, recipe) {
 
     const ingTitle = document.createElement('p');
     ingTitle.className = 'recipe-details__label';
-    ingTitle.textContent = 'Ingredients:';
+    ingTitle.textContent = t('Ingredients:');
     div.appendChild(ingTitle);
 
     const ul = document.createElement('ul');
@@ -508,7 +513,7 @@ function toggleDetails(article, recipe) {
     if (recipe.steps?.length) {
         const stepsTitle = document.createElement('p');
         stepsTitle.className = 'recipe-details__label';
-        stepsTitle.textContent = 'Steps:';
+        stepsTitle.textContent = t('Steps:');
         div.appendChild(stepsTitle);
 
         const ol = document.createElement('ol');
@@ -522,7 +527,7 @@ function toggleDetails(article, recipe) {
     }
 
     article.appendChild(div);
-    article.querySelector('.recipe-btn').textContent = 'Show less';
+    article.querySelector('.recipe-btn').textContent = t('Show less');
 }
 
 // ── Receta compartida por URL ────────────────────────────────────
@@ -536,9 +541,9 @@ function checkSharedRecipe() {
         const recipe = JSON.parse(atob(encoded));
         if (!recipe.id || !recipe.name || !Array.isArray(recipe.ingredients)) return;
 
-        if (window.confirm(`You received a shared recipe: "${recipe.name}". Save it?`)) {
+        if (window.confirm(`${t('You received a shared recipe:')} "${recipe.name}". ${t('Save it?')}`)) {
             saveLocalRecipe(recipe);
-            alert(`"${recipe.name}" saved!`);
+            alert(`"${recipe.name}" ${t('saved!')}`);
         }
     } catch {
         // Parámetro inválido — ignorar

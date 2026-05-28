@@ -15,19 +15,20 @@
             <nav class="navbar" aria-label="Main navigation">
                 <a href="../index.html" class="nav-brand">Food Roulette</a>
                 <ul class="nav-links">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="roulette.html">Roulette</a></li>
-                    <li><a href="about-us.html" aria-current="page">About us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="../index.html" data-translate>Home</a></li>
+                    <li><a href="roulette.html" data-translate>Roulette</a></li>
+                    <li><a href="about-us.html" aria-current="page" data-translate>About us</a></li>
+                    <li><a href="contact.html" data-translate>Contact</a></li>
                 </ul>
                 <div class="nav-controls">
-                    <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">🌙</button>
+                    <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" data-translate-title="Toggle dark mode">🌙</button>
+                    <button class="lang-toggle" id="lang-toggle" title="Change language" data-translate-title="Change language">ES</button>
                     <div class="user-menu">
-                        <button class="user-btn" id="user-btn" title="User account">👤</button>
+                        <button class="user-btn" id="user-btn" title="User account" data-translate-title="User account">👤</button>
                         <div class="user-dropdown" id="user-dropdown" hidden>
-                            <button class="user-menu-item" id="login-open-btn">Login</button>
-                            <button class="user-menu-item" id="favorites-btn" hidden>❤️ Favorites</button>
-                            <button class="user-menu-item" id="logout-btn" hidden>Logout</button>
+                            <button class="user-menu-item" id="login-open-btn" data-translate>Login</button>
+                            <button class="user-menu-item" id="favorites-btn" hidden data-translate>❤️ Favorites</button>
+                            <button class="user-menu-item" id="logout-btn" hidden data-translate>Logout</button>
                         </div>
                     </div>
                 </div>
@@ -38,15 +39,15 @@
         <div class="modal" id="auth-modal" hidden>
             <div class="modal-content">
                 <button class="modal-close" id="auth-close-btn">✕</button>
-                
+
                 <div class="auth-container">
                     <!-- Pestaña de Login -->
                     <div class="auth-tab" id="login-tab" data-tab="login">
-                        <h2>Login</h2>
+                        <h2 data-translate>Login</h2>
                         <form id="login-form">
-                            <input type="text" placeholder="Username" id="login-username" required />
-                            <input type="password" placeholder="Password" id="login-password" required />
-                            <button type="submit" class="btn btn--primary">Sign In</button>
+                            <input type="text" placeholder="Username" id="login-username" required data-translate />
+                            <input type="password" placeholder="Password" id="login-password" required data-translate />
+                            <button type="submit" class="btn btn--primary" data-translate>Sign In</button>
                         </form>
                         <p class="auth-switch">Don't have an account? <button type="button" class="auth-tab-btn" data-tab="register">Register</button></p>
                         <div class="auth-message" id="login-message"></div>
@@ -54,12 +55,12 @@
 
                     <!-- Pestaña de Registro -->
                     <div class="auth-tab" id="register-tab" data-tab="register" hidden>
-                        <h2>Register</h2>
+                        <h2 data-translate>Register</h2>
                         <form id="register-form">
-                            <input type="text" placeholder="Username" id="register-username" required />
-                            <input type="password" placeholder="Password" id="register-password" required />
-                            <input type="password" placeholder="Confirm Password" id="register-confirm" required />
-                            <button type="submit" class="btn btn--primary">Create Account</button>
+                            <input type="text" placeholder="Username" id="register-username" required data-translate />
+                            <input type="password" placeholder="Password" id="register-password" required data-translate />
+                            <input type="password" placeholder="Confirm Password" id="register-confirm" required data-translate />
+                            <button type="submit" class="btn btn--primary" data-translate>Create Account</button>
                         </form>
                         <p class="auth-switch">Already have an account? <button type="button" class="auth-tab-btn" data-tab="login">Login</button></p>
                         <div class="auth-message" id="register-message"></div>
@@ -71,16 +72,16 @@
         <!-- ── Contenido principal ────────────────────────────────── -->
         <main>
             <section class="hero">
-                <h1 class="hero-title">About Us</h1>
-                <p class="hero-subtitle">
+                <h1 class="hero-title" data-translate>About Us</h1>
+                <p class="hero-subtitle" data-translate>
                     Discover the story behind Food Roulette
                 </p>
             </section>
 
             <article class="content-section" style="padding: 40px 20px; max-width: 900px; margin: 0 auto;">
                 <section>
-                    <h2>Our Mission</h2>
-                    <p>
+                    <h2 data-translate>Our Mission</h2>
+                    <p data-translate="Food Roulette was created with a simple yet powerful mission: to transform the way people discover recipes. We believe that cooking should be an adventure, not a chore. Whether you have leftover ingredients in your fridge or you're looking for inspiration, Food Roulette is here to help you create delicious meals.">
                         Food Roulette was created with a simple yet powerful mission: to transform the way people
                         discover recipes. We believe that cooking should be an adventure, not a chore. Whether you have
                         leftover ingredients in your fridge or you're looking for inspiration, Food Roulette is here
@@ -89,8 +90,8 @@
                 </section>
 
                 <section>
-                    <h2>Who We Are</h2>
-                    <p>
+                    <h2 data-translate>Who We Are</h2>
+                    <p data-translate="We're a passionate team of food enthusiasts and developers dedicated to making recipe discovery fun and accessible to everyone. Our app combines the excitement of a roulette wheel with smart ingredient matching to bring you the perfect recipe every time.">
                         We're a passionate team of food enthusiasts and developers dedicated to making recipe discovery
                         fun and accessible to everyone. Our app combines the excitement of a roulette wheel with smart
                         ingredient matching to bring you the perfect recipe every time.
@@ -98,19 +99,18 @@
                 </section>
 
                 <section>
-                    <h2>What We Offer</h2>
+                    <h2 data-translate>What We Offer</h2>
                     <ul style="line-height: 1.8; font-size: 1.1rem; margin: 20px 0;">
-                        <li><strong>Ingredient-Based Search:</strong> Tell us what you have, and we'll find the perfect
-                            recipe</li>
-                        <li><strong>Food Roulette:</strong> Let luck decide with our interactive spinning wheel</li>
-                        <li><strong>Smart Filtering:</strong> Filter by diet type, meal preferences, and cooking time</li>
-                        <li><strong>Instant Recommendations:</strong> Get recipe suggestions in seconds</li>
+                        <li><strong data-translate>Ingredient-Based Search:</strong> <span data-translate>Tell us what you have, and we'll find the perfect recipe</span></li>
+                        <li><strong data-translate>Food Roulette:</strong> <span data-translate>Let luck decide with our interactive spinning wheel</span></li>
+                        <li><strong data-translate>Smart Filtering:</strong> <span data-translate>Filter by diet type, meal preferences, and cooking time</span></li>
+                        <li><strong data-translate>Instant Recommendations:</strong> <span data-translate>Get recipe suggestions in seconds</span></li>
                     </ul>
                 </section>
 
                 <section>
-                    <h2>Our Vision</h2>
-                    <p>
+                    <h2 data-translate>Our Vision</h2>
+                    <p data-translate="We envision a world where nobody has to waste ingredients or struggle with meal planning. Food Roulette is committed to reducing food waste while making cooking more enjoyable and accessible to people of all skill levels.">
                         We envision a world where nobody has to waste ingredients or struggle with meal planning.
                         Food Roulette is committed to reducing food waste while making cooking more enjoyable and
                         accessible to people of all skill levels.
@@ -118,8 +118,8 @@
                 </section>
 
                 <section>
-                    <h2>Made with Love</h2>
-                    <p>
+                    <h2 data-translate>Made with Love</h2>
+                    <p data-translate="Every feature, every spin, and every recipe recommendation is built with care and attention to detail. We're constantly improving and adding new features to make your cooking experience even better.">
                         Every feature, every spin, and every recipe recommendation is built with care and attention
                         to detail. We're constantly improving and adding new features to make your cooking experience
                         even better.
@@ -130,135 +130,9 @@
 
         <!-- ── Pie de página ───────────────────────────────────────── -->
         <footer class="site-footer">
-            <p>Made with love and lots of ingredients · Food Roulette 2026</p>
+            <p data-translate>Made with love and lots of ingredients · Food Roulette 2026</p>
         </footer>
-        <script type="module" src="../js/theme.js"></script>
-        <script type="module" src="../js/auth.js"></script>
-        <script type="module">
-            import { initTheme, toggleTheme } from '../js/theme.js';
-            import { logout, getCurrentUser, login, register } from '../js/auth.js';
-
-            // Inicializar tema
-            initTheme();
-
-            // Referencias del DOM
-            const themeToggle = document.getElementById('theme-toggle');
-            const userBtn = document.getElementById('user-btn');
-            const userDropdown = document.getElementById('user-dropdown');
-            const loginOpenBtn = document.getElementById('login-open-btn');
-            const logoutBtn = document.getElementById('logout-btn');
-            const favoritesBtn = document.getElementById('favorites-btn');
-            const authModal = document.getElementById('auth-modal');
-            const authCloseBtn = document.getElementById('auth-close-btn');
-            const loginForm = document.getElementById('login-form');
-            const registerForm = document.getElementById('register-form');
-            const loginMessage = document.getElementById('login-message');
-            const registerMessage = document.getElementById('register-message');
-
-            // Setup tema
-            themeToggle.addEventListener('click', () => {
-                const theme = toggleTheme();
-                themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
-            });
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-            themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
-
-            // Setup autenticación
-            loginOpenBtn.addEventListener('click', () => {
-                authModal.hidden = false;
-            });
-            authCloseBtn.addEventListener('click', () => {
-                authModal.hidden = true;
-            });
-            authModal.addEventListener('click', (e) => {
-                if (e.target === authModal) authModal.hidden = true;
-            });
-
-            document.querySelectorAll('.auth-tab-btn').forEach((btn) => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const tab = btn.getAttribute('data-tab');
-                    document.querySelectorAll('.auth-tab').forEach(t => t.hidden = true);
-                    document.getElementById(`${tab}-tab`).hidden = false;
-                    document.getElementById(`${tab}-message`).textContent = '';
-                });
-            });
-
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const username = document.getElementById('login-username').value;
-                const password = document.getElementById('login-password').value;
-                const result = login(username, password);
-                if (result.success) {
-                    loginMessage.textContent = '✓ ' + result.message;
-                    loginMessage.classList.remove('error');
-                    setTimeout(() => {
-                        authModal.hidden = true;
-                        loginForm.reset();
-                        updateUserUI();
-                    }, 500);
-                } else {
-                    loginMessage.textContent = '✗ ' + result.error;
-                    loginMessage.classList.add('error');
-                }
-            });
-
-            registerForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const username = document.getElementById('register-username').value;
-                const password = document.getElementById('register-password').value;
-                const confirm = document.getElementById('register-confirm').value;
-                if (password !== confirm) {
-                    registerMessage.textContent = '✗ Passwords do not match';
-                    registerMessage.classList.add('error');
-                    return;
-                }
-                const result = register(username, password);
-                if (result.success) {
-                    registerMessage.textContent = '✓ ' + result.message;
-                    registerMessage.classList.remove('error');
-                    setTimeout(() => {
-                        document.querySelectorAll('.auth-tab').forEach(t => t.hidden = true);
-                        document.getElementById('login-tab').hidden = false;
-                        registerForm.reset();
-                    }, 500);
-                } else {
-                    registerMessage.textContent = '✗ ' + result.error;
-                    registerMessage.classList.add('error');
-                }
-            });
-
-            userBtn.addEventListener('click', () => {
-                userDropdown.hidden = !userDropdown.hidden;
-            });
-            logoutBtn.addEventListener('click', () => {
-                logout();
-                updateUserUI();
-                userDropdown.hidden = true;
-            });
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.user-menu')) {
-                    userDropdown.hidden = true;
-                }
-            });
-
-            function updateUserUI() {
-                const currentUser = getCurrentUser();
-                if (currentUser) {
-                    loginOpenBtn.hidden = true;
-                    favoritesBtn.hidden = true;
-                    logoutBtn.hidden = false;
-                    userBtn.textContent = '👤 ' + currentUser;
-                } else {
-                    loginOpenBtn.hidden = false;
-                    favoritesBtn.hidden = true;
-                    logoutBtn.hidden = true;
-                    userBtn.textContent = '👤';
-                }
-            }
-
-            updateUserUI();
-        </script>
+        <script type="module" src="../js/about-us.js"></script>
     </body>
 
 </html>

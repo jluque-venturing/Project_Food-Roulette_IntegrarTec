@@ -9,7 +9,9 @@ async function toggleLang() {
   if (btn) btn.textContent = next === 'en' ? 'ES' : 'EN';
 }
 
-function initLang() {
+async function initLang() {
+  await loadDictionary();
+  translatePage();
   const btn = document.getElementById('lang-toggle');
   if (!btn) return;
   btn.textContent = getLang() === 'en' ? 'ES' : 'EN';
