@@ -1,0 +1,48 @@
+const LANG_KEY = 'lang';
+const DEFAULT_LANG = 'en';
+
+// Language codes must be lowercase
+const AVAILABLE_LANGS = ['en', 'es'];
+
+let dictionary = {};
+
+export function getLang() {
+    return localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+}
+
+export function setLang(lang) {
+    localStorage.setItem(LANG_KEY, lang);
+}
+
+export async function loadDictionary() {
+    const lang = getLang();
+    if (lang === 'en') {
+        dictionary = {};
+        return;
+    }
+    if (AVAILABLE_LANGS.includes(lang.toLowerCase())) {
+        const module = await import(`./translations/${lang}.js`);
+        dictionary = module.default;
+    }
+}
+
+export function t(key) {
+    return dictionary[key] ?? key;
+}
+
+export function translatePage() {
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        let key = element.getAttribute('data-translate');
+        if (!key) {
+            key = element.hasAttribute('placeholder')
+                ? element.placeholder
+                : element.textContent.trim();
+            element.setAttribute('data-translate', key);
+        }
+        if (element.hasAttribute('placeholder')) {
+            element.placeholder = t(key);
+        } else {
+            element.textContent = t(key);
+        }
+    });
+}
