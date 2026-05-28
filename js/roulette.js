@@ -1,9 +1,11 @@
 import { getRecipes, getIngredients, getFilters, saveFilters, saveToHistory } from './storage.js';
 import { initLang } from './lang.js';
 import { t } from './translator/translator.js';
+import { initThemeUI, initAuthUI } from './ui.js';
 initLang();
 import { applyFilters } from './filters.js';
 import { searchByName } from './api.js';
+import { logout, getCurrentUser, login, register } from './auth.js';
 
 // ── Colores de los segmentos (tonos vibrantes, comida) ───────────
 const SEGMENT_COLORS = [
@@ -11,6 +13,56 @@ const SEGMENT_COLORS = [
   '#9B59B6', '#E84393', '#27AE60', '#2980B9',
   '#E67E22', '#16A085', '#8E44AD', '#C0392B',
 ];
+
+// Referencias del DOM
+const themeToggle = document.getElementById('theme-toggle');
+const userBtn = document.getElementById('user-btn');
+const userDropdown = document.getElementById('user-dropdown');
+const loginOpenBtn = document.getElementById('login-open-btn');
+const favoritesBtn = document.getElementById('favorites-btn');
+const logoutBtn = document.getElementById('logout-btn');
+const authModal = document.getElementById('auth-modal');
+const authCloseBtn = document.getElementById('auth-close-btn');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const loginMessage = document.getElementById('login-message');
+const registerMessage = document.getElementById('register-message');
+
+// Inicializar control de tema y autenticación centralizados
+initThemeUI({ toggleEl: themeToggle });
+initAuthUI({
+  loginOpenBtn,
+  authModal,
+  authCloseBtn,
+  loginForm,
+  registerForm,
+  loginMessage,
+  registerMessage,
+  userBtn,
+  userDropdown,
+  logoutBtn,
+  favoritesBtn,
+  favoritesModal: document.getElementById('favorites-modal'),
+  favoritesCloseBtn: document.getElementById('favorites-close-btn'),
+  updateUserUI,
+  renderFavorites: null,
+});
+
+function updateUserUI() {
+    const currentUser = getCurrentUser();
+    
+    if (currentUser) {
+        loginOpenBtn.hidden = true;
+        favoritesBtn.hidden = true;
+        logoutBtn.hidden = false;
+        userBtn.textContent = '👤 ' + currentUser;
+    } else {
+        loginOpenBtn.hidden = false;
+        favoritesBtn.hidden = true;
+        logoutBtn.hidden = true;
+        userBtn.textContent = '👤';
+    }
+}
 
 // ── Clase RouletteWheel ──────────────────────────────────────────
 

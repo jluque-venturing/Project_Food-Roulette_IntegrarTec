@@ -176,6 +176,39 @@
   box-shadow: 0 2px 12px rgba(74, 44, 36, 0.08);
 }
 
+/* Dark-mode adjustments specific to roulette filters panel for better contrast */
+[data-theme="dark"] .filters-panel {
+  background: var(--light_Beige);
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+[data-theme="dark"] .filter-select,
+[data-theme="dark"] .filter-text-input,
+[data-theme="dark"] .filter-add-btn {
+  background: #151515;
+  border-color: #F28C28;
+  color: var(--brown);
+}
+[data-theme="dark"] #include-add-btn,
+[data-theme="dark"] #exclude-add-btn {
+  background: var(--primary);
+}
+[data-theme="dark"] #include-add-btn:hover,
+[data-theme="dark"] #exclude-add-btn:hover {
+  background: #bf3a3a
+}
+
+[data-theme="dark"] #apply-filters-btn {
+  background: var(--primary);
+}
+[data-theme="dark"] #apply-filters-btn:hover{
+  background: #bf3a3a
+}
+
+
+[data-theme="dark"] .range-markers { color: #999; }
+
 .filters-panel__title {
   font-size: 1.2rem;
   color: var(--primary);
@@ -268,8 +301,11 @@
 .filter-add-btn:focus { outline: 2px solid var(--primary); outline-offset: 2px; }
 
 /* Tags del panel (reutiliza .ingredient-tag de style.css) */
-#include-tags .ingredient-tag { background: var(--accent); }
-#exclude-tags .ingredient-tag { background: #b33a3a; }
+#include-tags .ingredient-tag,
+#exclude-tags .ingredient-tag {
+  background: var(--accent);
+  color: white;
+}
 
 /* ================================================================
    MODAL DE RESULTADO
