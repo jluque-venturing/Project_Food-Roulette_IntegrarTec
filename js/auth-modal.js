@@ -21,7 +21,10 @@ const AUTH_MODAL_HTML = `
             <input type="password" placeholder="Password" id="login-password" required data-translate />
             <button type="submit" class="btn btn--primary" data-translate>Sign In</button>
           </form>
-          <p class="auth-switch">Don't have an account? <button type="button" class="auth-tab-btn" data-tab="register">Register</button></p>
+          <p class="auth-switch">
+            <span data-translate>Don't have an account?</span>
+            <button type="button" class="auth-tab-btn" data-tab="register" data-translate>Register</button>
+          </p>
           <div class="auth-message" id="login-message" role="alert"></div>
         </div>
 
@@ -37,7 +40,10 @@ const AUTH_MODAL_HTML = `
             <input type="password" placeholder="Confirm Password" id="register-confirm" required data-translate />
             <button type="submit" class="btn btn--primary" data-translate>Create Account</button>
           </form>
-          <p class="auth-switch">Already have an account? <button type="button" class="auth-tab-btn" data-tab="login">Login</button></p>
+          <p class="auth-switch">
+            <span data-translate>Already have an account?</span>
+            <button type="button" class="auth-tab-btn" data-tab="login" data-translate>Login</button>
+          </p>
           <div class="auth-message" id="register-message" role="alert"></div>
         </div>
       </div>

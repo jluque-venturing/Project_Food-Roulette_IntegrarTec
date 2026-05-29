@@ -37,6 +37,13 @@ body {
     line-height: 1.5;
 }
 
+/* Header fijo: queda visible al hacer scroll */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
 .navbar {
     display: flex;
     flex-direction: column;
@@ -208,7 +215,7 @@ body {
 
 /* ── Filter chip activo ──────────────────────────────────────── */
 
-.filter-chip.active { background: var(--accent); color: #fff; }
+.filter-chip.active { background: var(--accent); color: var(--brown); }
 
 [data-theme="dark"] .filter-chip.active { color: #1a1a1a; }
 .filter-chip input  { margin-right: 0.3rem; }
