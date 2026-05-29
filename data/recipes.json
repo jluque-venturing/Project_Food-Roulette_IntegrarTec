@@ -31,7 +31,7 @@
     "ingredients": ["eggs", "potato", "onion", "olive oil", "salt"],
     "time": 30,
     "difficulty": "medium",
-    "image": "https://www.themealdb.com/images/media/meals/7b862e1763194846.jpg",
+    "image": "https://www.themealdb.com/images/media/meals/quuxsx1511476154.jpg",
     "emoji": "🍳",
     "steps": [
       "Peel and thinly slice potatoes and onion.",
@@ -96,7 +96,7 @@
     "ingredients": ["chicken", "onion", "garlic", "ginger", "tomato sauce", "coconut milk", "cumin", "turmeric", "garam masala"],
     "time": 40,
     "difficulty": "medium",
-    "image": "https://www.themealdb.com/images/media/meals/vwrpps1503068729.jpg",
+    "image": "https://www.spiceandcolour.com/wp-content/uploads/2020/06/pollo-al-curry-01.jpg",
     "emoji": "🍛",
     "steps": [
       "Cut chicken into bite-sized pieces.",
@@ -161,7 +161,7 @@
     "ingredients": ["rice", "milk", "sugar", "cinnamon", "lemon peel", "butter"],
     "time": 40,
     "difficulty": "easy",
-    "image": "https://www.themealdb.com/images/media/meals/rsqwus1511640214.jpg",
+    "image": "https://www.lifeloveandsugar.com/wp-content/uploads/2021/01/Rice-Pudding4E.jpg",
     "emoji": "🍮",
     "steps": [
       "Bring milk to a near boil with lemon peel and a cinnamon stick.",
@@ -182,7 +182,7 @@
     "ingredients": ["avocado", "lime", "onion", "cilantro", "jalapeño", "salt", "tomato"],
     "time": 10,
     "difficulty": "easy",
-    "image": "https://www.themealdb.com/images/media/meals/1549542994.jpg",
+    "image": "https://whatmollymade.com/wp-content/uploads/2024/05/homemade-guacamole-1.jpg",
     "emoji": "🥑",
     "steps": [
       "Halve and mash ripe avocados in a bowl.",
@@ -203,7 +203,7 @@
     "ingredients": ["beef", "bread", "lettuce", "tomato", "onion", "cheese", "salt", "black pepper"],
     "time": 30,
     "difficulty": "easy",
-    "image": "https://www.themealdb.com/images/media/meals/lgmnff1763789847.jpg",
+    "image": "https://cdn.shopify.com/s/files/1/0173/8181/8422/files/20250703195540-cheeseburger.jpg?v=1751572542&width=1600&height=900",
     "emoji": "🍔",
     "steps": [
       "Season ground beef with salt and pepper. Form into patties.",
@@ -224,7 +224,7 @@
     "ingredients": ["tomato", "mozzarella", "fresh basil", "olive oil", "salt", "black pepper"],
     "time": 10,
     "difficulty": "easy",
-    "image": "https://www.themealdb.com/images/media/meals/se5vhk1764114880.jpg",
+    "image": "https://okdiario.com/img/2016/11/26/receta-de-ensalada-caprese.jpg",
     "emoji": "🥗",
     "steps": [
       "Slice tomatoes and mozzarella into even rounds.",
@@ -245,7 +245,7 @@
     "ingredients": ["broccoli", "carrot", "bell pepper", "mushrooms", "garlic", "ginger", "soy sauce", "sesame oil"],
     "time": 20,
     "difficulty": "easy",
-    "image": "https://www.themealdb.com/images/media/meals/rwvw8q1765660071.jpg",
+    "image": "https://www.themealdb.com/images/media/meals/minfsc1763766806.jpg",
     "emoji": "🥦",
     "steps": [
       "Chop all vegetables into similar-sized pieces.",
@@ -380,6 +380,241 @@
       "Add flour and salt. Divide into greased ramekins.",
       "Bake at 200°C (390°F) for 10–12 minutes. Center should remain soft.",
       "Invert onto a plate and serve immediately with vanilla ice cream."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r019",
+    "name": "Avocado Toast",
+    "type": "breakfast",
+    "vegan": true,
+    "vegetarian": true,
+    "glutenFree": false,
+    "budget": true,
+    "ingredients": ["bread", "avocado", "lemon", "garlic", "olive oil", "salt", "black pepper"],
+    "time": 10,
+    "difficulty": "easy",
+    "image": "https://s.lightorangebean.com/media/20240914152419/Vegan-Avocado-Toast_-doner.png",
+    "emoji": "🥑",
+    "steps": [
+      "Toast the bread slices until golden and crispy.",
+      "Halve the avocado, remove the pit and scoop the flesh into a bowl.",
+      "Mash the avocado with lemon juice, salt and a pinch of black pepper.",
+      "Rub the toast with a cut garlic clove, spread the avocado mix and drizzle with olive oil."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r020",
+    "name": "French Toast",
+    "type": "breakfast",
+    "vegan": false,
+    "vegetarian": true,
+    "glutenFree": false,
+    "budget": true,
+    "ingredients": ["bread", "eggs", "milk", "butter", "sugar", "cinnamon", "honey", "berries"],
+    "time": 15,
+    "difficulty": "easy",
+    "image": "https://cdn.loveandlemons.com/wp-content/uploads/2024/08/french-toast-recipe.jpg",
+    "emoji": "🍞",
+    "steps": [
+      "Whisk together eggs, milk, a pinch of sugar and cinnamon in a shallow bowl.",
+      "Dip each bread slice in the egg mixture, coating both sides well.",
+      "Melt butter in a pan over medium heat.",
+      "Cook the soaked bread 2–3 minutes per side until golden.",
+      "Serve topped with fresh berries and a drizzle of honey."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r021",
+    "name": "Greek Yogurt Parfait",
+    "type": "breakfast",
+    "vegan": false,
+    "vegetarian": true,
+    "glutenFree": true,
+    "budget": true,
+    "ingredients": ["yogurt", "oats", "honey", "banana", "almonds"],
+    "time": 5,
+    "difficulty": "easy",
+    "image": "https://lemontreedwelling.com/wp-content/uploads/2015/01/Banana-Maple-Yogurt-Parfait-43.jpg",
+    "emoji": "🥣",
+    "steps": [
+      "Slice the banana.",
+      "In a glass or bowl, layer yogurt, oats and banana slices.",
+      "Top with a drizzle of honey and a handful of chopped almonds.",
+      "Serve immediately or refrigerate overnight for a thicker texture."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r022",
+    "name": "Veggie Omelette",
+    "type": "breakfast",
+    "vegan": false,
+    "vegetarian": true,
+    "glutenFree": true,
+    "budget": true,
+    "ingredients": ["eggs", "bell pepper", "mushrooms", "onion", "cheese", "salt", "black pepper", "olive oil"],
+    "time": 15,
+    "difficulty": "easy",
+    "image": "https://www.recetasnestle.com.co/sites/default/files/srh_recipes/4ac49207d78524c7c5f7bb69a5aab388.jpg",
+    "emoji": "🍳",
+    "steps": [
+      "Dice the bell pepper, mushrooms and onion.",
+      "Sauté vegetables in olive oil over medium heat until soft, about 5 minutes.",
+      "Beat 3 eggs with salt and pepper, pour over the vegetables.",
+      "Cook on low heat until the edges set. Add grated cheese, fold in half and serve."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r023",
+    "name": "Caesar Salad",
+    "type": "lunch",
+    "vegan": false,
+    "vegetarian": false,
+    "glutenFree": false,
+    "budget": false,
+    "ingredients": ["lettuce", "chicken", "Parmesan", "olive oil", "lemon", "garlic", "salt", "black pepper", "bread"],
+    "time": 25,
+    "difficulty": "easy",
+    "image": "https://ariztia.com/wp-content/uploads/2023/11/ensalada-cesar-de-pollo.jpg",
+    "emoji": "🥗",
+    "steps": [
+      "Season chicken breast with salt and pepper. Cook in a pan with olive oil over medium heat, 5–6 min per side. Let rest and slice.",
+      "Cut bread into small cubes and toast in the same pan with olive oil until golden. Set aside as croutons.",
+      "Whisk together minced garlic, lemon juice, olive oil, salt and pepper to make the dressing.",
+      "Chop the lettuce and toss with the dressing until well coated.",
+      "Plate the salad, top with sliced chicken, shaved Parmesan and the croutons."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r024",
+    "name": "Chicken Wrap",
+    "type": "lunch",
+    "vegan": false,
+    "vegetarian": false,
+    "glutenFree": false,
+    "budget": true,
+    "ingredients": ["chicken", "corn tortillas", "lettuce", "tomato", "cheese", "olive oil", "salt", "black pepper"],
+    "time": 20,
+    "difficulty": "easy",
+    "image": "https://simply-delicious-food.com/wp-content/uploads/2019/04/tzatziki-chicken-wraps-1.jpg",
+    "emoji": "🌯",
+    "steps": [
+      "Season chicken strips with salt and pepper. Cook in a pan with olive oil over medium heat, 5–6 min per side.",
+      "Let the chicken rest 2 minutes, then slice thinly.",
+      "Warm the tortillas on a dry pan for 30 seconds each side.",
+      "Fill each tortilla with chicken, shredded lettuce, diced tomato and grated cheese. Roll tightly and serve."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r025",
+    "name": "Tiramisu",
+    "type": "dessert",
+    "vegan": false,
+    "vegetarian": true,
+    "glutenFree": false,
+    "budget": false,
+    "ingredients": ["eggs", "sugar", "mascarpone", "cream", "ladyfingers", "coffee", "cocoa powder"],
+    "time": 30,
+    "difficulty": "medium",
+    "image": "https://www.bunsenburnerbakery.com/wp-content/uploads/2016/06/easy-tiramisu-square-29-720x540.jpg",
+    "emoji": "☕",
+    "steps": [
+      "Brew strong coffee and let it cool completely.",
+      "Whisk egg yolks and sugar until pale and fluffy. Fold in mascarpone until smooth.",
+      "Whip the cream to soft peaks and gently fold into the mascarpone mixture.",
+      "Quickly dip ladyfingers in the coffee and arrange a layer in a dish.",
+      "Spread half the cream mixture on top. Repeat the layers and dust generously with cocoa powder. Refrigerate at least 4 hours before serving."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r026",
+    "name": "Apple Crumble",
+    "type": "dessert",
+    "vegan": false,
+    "vegetarian": true,
+    "glutenFree": false,
+    "budget": true,
+    "ingredients": ["apple", "flour", "butter", "sugar", "oats", "cinnamon"],
+    "time": 45,
+    "difficulty": "easy",
+    "image": "https://www.marthastewart.com/thmb/ZuSCvO48v-CDKkHvb4SOTDBjKsA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MS-314054-apple-crumb-pie-beauty-2x3_74895-6c80520e104644adac1dd8ad09ec5432.jpg",
+    "emoji": "🍎",
+    "steps": [
+      "Peel, core and slice the apples. Toss with sugar and cinnamon and spread in a baking dish.",
+      "Mix flour, oats and sugar in a bowl. Rub in cold butter with your fingertips until crumbly.",
+      "Spread the crumble topping evenly over the apples.",
+      "Bake at 180°C (350°F) for 30–35 minutes until golden and bubbling. Serve warm."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r027",
+    "name": "Mango Sorbet",
+    "type": "dessert",
+    "vegan": true,
+    "vegetarian": true,
+    "glutenFree": true,
+    "budget": true,
+    "ingredients": ["mango", "sugar", "lime", "water"],
+    "time": 15,
+    "difficulty": "easy",
+    "image": "https://cookingformysoul.com/wp-content/uploads/2025/06/featured2-mango-coconut-sorbet-min.jpg",
+    "emoji": "🍧",
+    "steps": [
+      "Peel and dice ripe mangoes. Freeze the pieces for at least 4 hours.",
+      "Dissolve sugar in warm water to make a simple syrup. Let it cool.",
+      "Blend frozen mango with the syrup and lime juice until very smooth.",
+      "Pour into a container and freeze for at least 2 more hours. Scoop and serve."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r028",
+    "name": "Churros with Chocolate Sauce",
+    "type": "dessert",
+    "vegan": false,
+    "vegetarian": true,
+    "glutenFree": false,
+    "budget": true,
+    "ingredients": ["flour", "butter", "sugar", "salt", "eggs", "vegetable oil", "dark chocolate", "cream"],
+    "time": 30,
+    "difficulty": "medium",
+    "image": "https://www.argofoodservice.com/Handlers/ImagePreview.ashx?imageURL=~/UploadStorage/C/Churro+01.jpg&width=500&height=500",
+    "emoji": "🍩",
+    "steps": [
+      "Bring 1 cup water, butter, sugar and salt to a boil. Add flour all at once and stir vigorously until a dough forms.",
+      "Remove from heat, let cool slightly, then beat in eggs one at a time until smooth.",
+      "Pipe the dough through a star nozzle into hot oil. Fry 3 minutes until golden. Drain and roll in sugar.",
+      "Melt dark chocolate with warm cream, stirring until silky.",
+      "Serve churros immediately with the chocolate sauce for dipping."
+    ],
+    "source": "local"
+  },
+  {
+    "id": "r029",
+    "name": "Bruschetta",
+    "type": "any",
+    "vegan": true,
+    "vegetarian": true,
+    "glutenFree": false,
+    "budget": true,
+    "ingredients": ["bread", "tomato", "garlic", "fresh basil", "olive oil", "salt", "black pepper"],
+    "time": 15,
+    "difficulty": "easy",
+    "image": "https://cdn.loveandlemons.com/wp-content/uploads/2025/05/bruschetta.jpg",
+    "emoji": "🍅",
+    "steps": [
+      "Slice the bread and toast under the grill or in a pan until golden.",
+      "Dice ripe tomatoes and mix with torn basil, olive oil, salt and pepper.",
+      "Rub each toast slice with a cut garlic clove.",
+      "Spoon the tomato mixture onto the toasts and serve immediately."
     ],
     "source": "local"
   }
