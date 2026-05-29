@@ -4,7 +4,6 @@ import { t } from './translator/translator.js';
 import { initChrome } from './ui.js';
 import { createAutocomplete } from './autocomplete.js';
 import { applyFilters } from './filters.js';
-import { searchByName } from './api.js';
 
 // Inyecta navbar + footer + modal de login y cablea tema/auth (una sola llamada)
 initChrome({ active: 'roulette' });
@@ -406,25 +405,14 @@ function showResult(recipe) {
   emojiEl.textContent = recipe.emoji || '🍽️';
 
   if (recipe.image) {
-    // La receta ya tiene imagen (ej: receta de la API)
     img.src    = recipe.image;
     img.alt    = recipe.name;
     img.hidden = false;
     emojiEl.hidden = true;
   } else {
-    // Sin imagen local: mostrar emoji inmediatamente
+    // Sin imagen: mostrar el emoji
     img.hidden     = true;
     emojiEl.hidden = false;
-
-    // Buscar imagen en TheMealDB en segundo plano (no bloquea la apertura del modal)
-    searchByName(recipe.name).then((meal) => {
-      const modal = document.getElementById('result-modal');
-      if (!meal?.strMealThumb || modal?.hidden) return;
-      img.alt    = recipe.name;
-      img.onload = () => { img.hidden = false; emojiEl.hidden = true; };
-      img.onerror = () => { /* mantener emoji si falla */ };
-      img.src    = meal.strMealThumb;
-    });
   }
 
   const ingList = document.getElementById('result-ingredients');
