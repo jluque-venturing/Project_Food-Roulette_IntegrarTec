@@ -286,7 +286,9 @@ function renderFavorites() {
             renderFavorites();
         });
 
-        article.querySelector('.recipe-btn').addEventListener('click', () =>
+        const favRecipeBtn = article.querySelector('.recipe-btn');
+        favRecipeBtn.textContent = t('Show more');
+        favRecipeBtn.addEventListener('click', () =>
             toggleDetails(article, recipe)
         );
 
@@ -342,7 +344,9 @@ function renderResults(recipes) {
         article.querySelector('.recipe-description').textContent =
             `${recipe.emoji || '🍽️'} ${recipe.time} ${t('min')} · ${t(recipe.difficulty)}`;
 
-        article.querySelector('.recipe-btn').addEventListener('click', () =>
+        const recipeBtn = article.querySelector('.recipe-btn');
+        recipeBtn.textContent = t('Show more');
+        recipeBtn.addEventListener('click', () =>
             toggleDetails(article, recipe)
         );
 
