@@ -2,6 +2,8 @@ import { getRecipes, getIngredients, getFilters, saveFilters, saveToHistory } fr
 import { initLang } from './lang.js';
 import { t } from './translator/translator.js';
 import { initThemeUI, initAuthUI } from './ui.js';
+import { injectAuthModal } from './auth-modal.js';
+injectAuthModal();   // inyecta el modal de login/registro antes de leer sus elementos
 initLang();
 import { applyFilters } from './filters.js';
 import { searchByName } from './api.js';

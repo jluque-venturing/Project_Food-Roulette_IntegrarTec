@@ -3,7 +3,10 @@ import { applyFilters } from './filters.js';
 import { register, login, logout, getCurrentUser, addFavorite, removeFavorite, getFavorites, isFavorite } from './auth.js';
 import { initThemeUI, initAuthUI } from './ui.js';
 import { initLang } from './lang.js';
+import { injectAuthModal } from './auth-modal.js';
 import { t } from './translator/translator.js';
+
+injectAuthModal();   // inyecta el modal de login/registro antes de leer sus elementos
 initLang();
 
 // ── Estado ───────────────────────────────────────────────────────

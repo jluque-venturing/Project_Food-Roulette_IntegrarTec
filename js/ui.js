@@ -41,17 +41,47 @@ export function initAuthUI({
     if (registerMessage) { registerMessage.textContent = ''; registerMessage.classList.remove('error'); }
   }
 
-  // Modal open/close
-  loginOpenBtn?.addEventListener('click', () => {
-    if (authModal) authModal.hidden = false;
+  // Modal open/close con manejo de foco (diálogo accesible)
+  let authPrevFocus = null;
+
+  // Elementos enfocables visibles dentro del modal (excluye la pestaña oculta)
+  function authFocusables() {
+    if (!authModal) return [];
+    return [...authModal.querySelectorAll('button, input, select, textarea, [href]')]
+      .filter((el) => !el.disabled && el.offsetParent !== null);
+  }
+
+  function openAuthModal() {
+    if (!authModal) return;
+    authPrevFocus = document.activeElement;   // recordar quién abrió
+    authModal.hidden = false;
     clearAuthMessages();
-  });
-  authCloseBtn?.addEventListener('click', () => {
-    if (authModal) authModal.hidden = true;
+    authFocusables()[0]?.focus();             // mover el foco al modal
+  }
+
+  function closeAuthModal() {
+    if (!authModal) return;
+    authModal.hidden = true;
     clearAuthMessages();
-  });
+    authPrevFocus?.focus?.();                 // devolver el foco al disparador
+  }
+
+  loginOpenBtn?.addEventListener('click', openAuthModal);
+  authCloseBtn?.addEventListener('click', closeAuthModal);
   authModal?.addEventListener('click', (e) => {
-    if (e.target === authModal) { authModal.hidden = true; clearAuthMessages(); }
+    if (e.target === authModal) closeAuthModal();
+  });
+
+  // Focus trap + Escape para cerrar
+  authModal?.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); closeAuthModal(); return; }
+    if (e.key !== 'Tab') return;
+    const f = authFocusables();
+    if (!f.length) return;
+    const first = f[0];
+    const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   // Tab switching
@@ -61,7 +91,7 @@ export function initAuthUI({
       const tab = btn.getAttribute('data-tab');
       document.querySelectorAll('.auth-tab').forEach(t => t.hidden = true);
       const el = document.getElementById(`${tab}-tab`);
-      if (el) el.hidden = false;
+      if (el) { el.hidden = false; el.querySelector('input')?.focus(); }
       const msg = document.getElementById(`${tab}-message`);
       if (msg) msg.textContent = '';
     });

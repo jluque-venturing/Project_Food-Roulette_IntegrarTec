@@ -4,6 +4,7 @@
 
 import { getLang, setLang, loadDictionary, translatePage, t } from './translator/translator.js';
 import { initThemeUI, initAuthUI } from './ui.js';
+import { injectAuthModal } from './auth-modal.js';
 import { addFavorite, removeFavorite, isFavorite, getCurrentUser } from './auth.js';
 
 const SELECTED_KEY = 'fr_selected_recipe';
@@ -217,6 +218,7 @@ function updateUserUI() {
 // ── Arranque ──────────────────────────────────────────────────────
 
 async function init() {
+  injectAuthModal();   // inyecta el modal de login/registro
   initThemeUI({ toggleEl: document.getElementById('theme-toggle') });
   initAuthUI({
     loginOpenBtn: document.getElementById('login-open-btn'),

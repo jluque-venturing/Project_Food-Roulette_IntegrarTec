@@ -36,39 +36,7 @@
             </nav>
         </header>
 
-        <!-- Modal de Login/Registro -->
-        <div class="modal" id="auth-modal" hidden>
-            <div class="modal-content">
-                <button class="modal-close" id="auth-close-btn">✕</button>
-
-                <div class="auth-container">
-                    <!-- Pestaña de Login -->
-                    <div class="auth-tab" id="login-tab" data-tab="login">
-                        <h2 data-translate>Login</h2>
-                        <form id="login-form">
-                            <input type="text" placeholder="Username" id="login-username" required data-translate />
-                            <input type="password" placeholder="Password" id="login-password" required data-translate />
-                            <button type="submit" class="btn btn--primary" data-translate>Sign In</button>
-                        </form>
-                        <p class="auth-switch">Don't have an account? <button type="button" class="auth-tab-btn" data-tab="register">Register</button></p>
-                        <div class="auth-message" id="login-message"></div>
-                    </div>
-
-                    <!-- Pestaña de Registro -->
-                    <div class="auth-tab" id="register-tab" data-tab="register" hidden>
-                        <h2 data-translate>Register</h2>
-                        <form id="register-form">
-                            <input type="text" placeholder="Username" id="register-username" required data-translate />
-                            <input type="password" placeholder="Password" id="register-password" required data-translate />
-                            <input type="password" placeholder="Confirm Password" id="register-confirm" required data-translate />
-                            <button type="submit" class="btn btn--primary" data-translate>Create Account</button>
-                        </form>
-                        <p class="auth-switch">Already have an account? <button type="button" class="auth-tab-btn" data-tab="login">Login</button></p>
-                        <div class="auth-message" id="register-message"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Modal de Login/Registro: se inyecta desde js/auth-modal.js -->
 
         <!-- ── Contenido principal ────────────────────────────────── -->
         <main>
