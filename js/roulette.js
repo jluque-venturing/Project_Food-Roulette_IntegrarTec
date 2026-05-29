@@ -1,13 +1,14 @@
 import { getRecipes, getIngredients, getFilters, saveFilters, saveToHistory } from './storage.js';
 import { initLang } from './lang.js';
 import { t } from './translator/translator.js';
-import { initThemeUI, initAuthUI } from './ui.js';
-import { injectAuthModal } from './auth-modal.js';
-injectAuthModal();   // inyecta el modal de login/registro antes de leer sus elementos
-initLang();
+import { initChrome } from './ui.js';
+import { createAutocomplete } from './autocomplete.js';
 import { applyFilters } from './filters.js';
 import { searchByName } from './api.js';
-import { logout, getCurrentUser, login, register } from './auth.js';
+
+// Inyecta navbar + footer + modal de login y cablea tema/auth (una sola llamada)
+initChrome({ active: 'roulette' });
+initLang();
 
 // ── Colores de los segmentos (tonos vibrantes, comida) ───────────
 const SEGMENT_COLORS = [
@@ -16,55 +17,7 @@ const SEGMENT_COLORS = [
   '#E67E22', '#16A085', '#8E44AD', '#C0392B',
 ];
 
-// Referencias del DOM
-const themeToggle = document.getElementById('theme-toggle');
-const userBtn = document.getElementById('user-btn');
-const userDropdown = document.getElementById('user-dropdown');
-const loginOpenBtn = document.getElementById('login-open-btn');
-const favoritesBtn = document.getElementById('favorites-btn');
-const logoutBtn = document.getElementById('logout-btn');
-const authModal = document.getElementById('auth-modal');
-const authCloseBtn = document.getElementById('auth-close-btn');
-const loginForm = document.getElementById('login-form');
-const registerForm = document.getElementById('register-form');
-const loginMessage = document.getElementById('login-message');
-const registerMessage = document.getElementById('register-message');
-
-// Inicializar control de tema y autenticación centralizados
-initThemeUI({ toggleEl: themeToggle });
-initAuthUI({
-  loginOpenBtn,
-  authModal,
-  authCloseBtn,
-  loginForm,
-  registerForm,
-  loginMessage,
-  registerMessage,
-  userBtn,
-  userDropdown,
-  logoutBtn,
-  favoritesBtn,
-  favoritesModal: document.getElementById('favorites-modal'),
-  favoritesCloseBtn: document.getElementById('favorites-close-btn'),
-  updateUserUI,
-  renderFavorites: null,
-});
-
-function updateUserUI() {
-    const currentUser = getCurrentUser();
-    
-    if (currentUser) {
-        loginOpenBtn.hidden = true;
-        favoritesBtn.hidden = true;
-        logoutBtn.hidden = false;
-        userBtn.textContent = '👤 ' + currentUser;
-    } else {
-        loginOpenBtn.hidden = false;
-        favoritesBtn.hidden = true;
-        logoutBtn.hidden = true;
-        userBtn.textContent = '👤';
-    }
-}
+// (navbar, footer, modal de login y cableado tema/auth los maneja initChrome arriba)
 
 // ── Clase RouletteWheel ──────────────────────────────────────────
 
@@ -245,110 +198,7 @@ class RouletteWheel {
   }
 }
 
-// ── Autocomplete ─────────────────────────────────────────────────
-
-function createAutocomplete(inputEl, itemsList) {
-  // El dropdown necesita que su padre tenga position: relative
-  const wrapper = inputEl.parentElement;
-  wrapper.style.position = 'relative';
-
-  const dropdown = document.createElement('ul');
-  dropdown.className = 'autocomplete-dropdown';
-  dropdown.setAttribute('role', 'listbox');
-  dropdown.hidden = true;
-  wrapper.appendChild(dropdown);
-
-  let activeIdx = -1;
-
-  function render(query) {
-    const q = query.toLowerCase().trim();
-    if (!q) { hide(); return; }
-
-    const matches = itemsList
-      .filter(item => t(item).toLowerCase().includes(q) || item.toLowerCase().includes(q))
-      .sort((a, b) => {
-        // Primero los que empiezan con la query, luego los que la contienen
-        const aT = t(a).toLowerCase();
-        const bT = t(b).toLowerCase();
-        const aS = (aT.startsWith(q) || a.toLowerCase().startsWith(q)) ? 0 : 1;
-        const bS = (bT.startsWith(q) || b.toLowerCase().startsWith(q)) ? 0 : 1;
-        return aS - bS || aT.localeCompare(bT);
-      })
-      .slice(0, 8);
-
-    if (!matches.length) { hide(); return; }
-
-    dropdown.innerHTML = '';
-    activeIdx = -1;
-
-    matches.forEach((item) => {
-      const li = document.createElement('li');
-      li.className = 'autocomplete-item';
-      li.setAttribute('role', 'option');
-      li.dataset.value = item; // clave en inglés para filtrar
-
-      // Highlight sobre el nombre traducido
-      const display = t(item);
-      const idx = display.toLowerCase().indexOf(q);
-      if (idx !== -1) {
-        li.appendChild(document.createTextNode(display.slice(0, idx)));
-        const mark = document.createElement('mark');
-        mark.className   = 'autocomplete-match';
-        mark.textContent = display.slice(idx, idx + q.length);
-        li.appendChild(mark);
-        li.appendChild(document.createTextNode(display.slice(idx + q.length)));
-      } else {
-        li.textContent = display;
-      }
-
-      // mousedown en vez de click para que el blur del input no cierre el dropdown
-      li.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        inputEl.value = item; // siempre la clave inglesa para que los filtros funcionen
-        hide();
-        inputEl.dispatchEvent(new Event('autocomplete-select', { bubbles: true }));
-      });
-
-      dropdown.appendChild(li);
-    });
-
-    dropdown.hidden = false;
-  }
-
-  function setActive(idx) {
-    const items = [...dropdown.querySelectorAll('.autocomplete-item')];
-    items.forEach((li, i) => li.classList.toggle('active', i === idx));
-    if (idx >= 0 && idx < items.length) inputEl.value = items[idx].dataset.value;
-  }
-
-  function hide() {
-    dropdown.hidden = true;
-    activeIdx = -1;
-  }
-
-  inputEl.addEventListener('input',  () => render(inputEl.value));
-  inputEl.addEventListener('focus',  () => { if (inputEl.value) render(inputEl.value); });
-  inputEl.addEventListener('blur',   () => setTimeout(hide, 160));
-  inputEl.addEventListener('keydown', (e) => {
-    const items = [...dropdown.querySelectorAll('.autocomplete-item')];
-    if (dropdown.hidden || !items.length) return;
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      activeIdx = (activeIdx + 1) % items.length;
-      setActive(activeIdx);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      activeIdx = (activeIdx - 1 + items.length) % items.length;
-      setActive(activeIdx);
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      hide();
-    }
-  });
-
-  return { hide };
-}
+// (createAutocomplete ahora se importa desde js/autocomplete.js)
 
 // ── Gestor de tags ───────────────────────────────────────────────
 

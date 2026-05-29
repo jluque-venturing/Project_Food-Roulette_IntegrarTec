@@ -12,29 +12,7 @@
 <body>
 
   <!-- ── Navegación ─────────────────────────────────────────── -->
-  <header class="header">
-    <nav class="navbar" aria-label="Main navigation">
-      <a href="../index.html" class="nav-brand">Food Roulette</a>
-      <ul class="nav-links">
-        <li><a href="../index.html" data-translate>Home</a></li>
-        <li><a href="roulette.html" data-translate>Roulette</a></li>
-        <li><a href="about-us.html" data-translate>About us</a></li>
-        <li><a href="contact.html" data-translate>Contact</a></li>
-      </ul>
-      <div class="nav-controls">
-        <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" data-translate-title="Toggle dark mode">🌙</button>
-        <button class="lang-toggle" id="lang-toggle" title="Change language" data-translate-title="Change language">ES</button>
-        <div class="user-menu">
-          <button class="user-btn" id="user-btn" title="User account" data-translate-title="User account">👤</button>
-          <div class="user-dropdown" id="user-dropdown" hidden>
-            <button class="user-menu-item" id="login-open-btn" data-translate>Login</button>
-            <button class="user-menu-item" id="favorites-btn" hidden data-translate>❤️ Favorites</button>
-            <button class="user-menu-item" id="logout-btn" hidden data-translate>Logout</button>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </header>
+  <!-- header (navbar): se inyecta desde js/navbar.js -->
 
   <!-- Modal de Login/Registro: se inyecta desde js/auth-modal.js -->
 
@@ -72,9 +50,7 @@
   </main>
 
   <!-- ── Pie de página ──────────────────────────────────────── -->
-  <footer class="site-footer">
-    <p data-translate>Made with love and lots of ingredients · Food Roulette 2026</p>
-  </footer>
+  <!-- footer: se inyecta desde js/navbar.js -->
 
   <script type="module" src="../js/recipe.js"></script>
 

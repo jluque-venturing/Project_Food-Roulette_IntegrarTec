@@ -1,12 +1,13 @@
 import { getRecipes, getIngredients, saveLocalRecipe } from './storage.js';
 import { applyFilters } from './filters.js';
-import { register, login, logout, getCurrentUser, addFavorite, removeFavorite, getFavorites, isFavorite } from './auth.js';
-import { initThemeUI, initAuthUI } from './ui.js';
+import { getCurrentUser, addFavorite, removeFavorite, getFavorites, isFavorite } from './auth.js';
+import { initChrome } from './ui.js';
+import { createAutocomplete } from './autocomplete.js';
 import { initLang } from './lang.js';
-import { injectAuthModal } from './auth-modal.js';
 import { t } from './translator/translator.js';
 
-injectAuthModal();   // inyecta el modal de login/registro antes de leer sus elementos
+// Inyecta navbar + footer + modal de login y cablea tema/auth (una sola llamada)
+const { updateUserUI } = initChrome({ active: 'home', showFavorites: true, renderFavorites });
 initLang();
 
 // ── Estado ───────────────────────────────────────────────────────
@@ -26,149 +27,22 @@ const recipesGrid = document.getElementById('recipes-grid');
 const recipeTemplate = document.getElementById('recipe-template');
 const resultsSection = document.getElementById('results-section');
 
-// Auth & Theme elements
-const themeToggle = document.getElementById('theme-toggle');
-const userBtn = document.getElementById('user-btn');
-const userDropdown = document.getElementById('user-dropdown');
-const loginOpenBtn = document.getElementById('login-open-btn');
-const favoritesBtn = document.getElementById('favorites-btn');
-const logoutBtn = document.getElementById('logout-btn');
-const authModal = document.getElementById('auth-modal');
-const authCloseBtn = document.getElementById('auth-close-btn');
-const loginForm = document.getElementById('login-form');
-const registerForm = document.getElementById('register-form');
-const loginMessage = document.getElementById('login-message');
-const registerMessage = document.getElementById('register-message');
-const favoritesModal = document.getElementById('favorites-modal');
-const favoritesCloseBtn = document.getElementById('favorites-close-btn');
+// Favoritos: grid dentro del modal de favoritos (propio del index)
 const favoritesGrid = document.getElementById('favorites-grid');
 
 // ── Inicialización ───────────────────────────────────────────────
 
 async function init() {
-    // Inicializar tema y autenticación via módulo compartido
-    initThemeUI({ toggleEl: themeToggle });
     [allRecipes, ingredients] = await Promise.all([getRecipes(), getIngredients()]);
     setupIngredientInput();
     setupFilterChips();
     setupQuickTags();
     setupSearch();
-    initAuthUI({
-        loginOpenBtn,
-        authModal,
-        authCloseBtn,
-        loginForm,
-        registerForm,
-        loginMessage,
-        registerMessage,
-        userBtn,
-        userDropdown,
-        logoutBtn,
-        favoritesBtn,
-        favoritesModal,
-        favoritesCloseBtn,
-        updateUserUI,
-        renderFavorites,
-    });
     checkSharedRecipe();
     updateUserUI();
 }
 
-// ── Autocomplete ─────────────────────────────────────────────────
-
-function createAutocomplete(inputEl, itemsList) {
-    const wrapper = inputEl.parentElement;
-    wrapper.style.position = 'relative';
-
-    const dropdown = document.createElement('ul');
-    dropdown.className = 'autocomplete-dropdown';
-    dropdown.setAttribute('role', 'listbox');
-    dropdown.hidden = true;
-    wrapper.appendChild(dropdown);
-
-    let activeIdx = -1;
-
-    function render(query) {
-        const q = query.toLowerCase().trim();
-        if (!q) { hide(); return; }
-
-        const matches = itemsList
-            .filter(item => item.toLowerCase().includes(q))
-            .sort((a, b) => {
-                const aS = a.toLowerCase().startsWith(q) ? 0 : 1;
-                const bS = b.toLowerCase().startsWith(q) ? 0 : 1;
-                return aS - bS || a.localeCompare(b);
-            })
-            .slice(0, 8);
-
-        if (!matches.length) { hide(); return; }
-
-        dropdown.innerHTML = '';
-        activeIdx = -1;
-
-        matches.forEach((item) => {
-            const li = document.createElement('li');
-            li.className = 'autocomplete-item';
-            li.setAttribute('role', 'option');
-
-            // Highlight sin innerHTML
-            const idx = item.toLowerCase().indexOf(q);
-            if (idx !== -1) {
-                li.appendChild(document.createTextNode(item.slice(0, idx)));
-                const mark = document.createElement('mark');
-                mark.className = 'autocomplete-match';
-                mark.textContent = item.slice(idx, idx + q.length);
-                li.appendChild(mark);
-                li.appendChild(document.createTextNode(item.slice(idx + q.length)));
-            } else {
-                li.textContent = item;
-            }
-
-            li.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                inputEl.value = item;
-                hide();
-                inputEl.dispatchEvent(new Event('autocomplete-select', { bubbles: true }));
-            });
-
-            dropdown.appendChild(li);
-        });
-
-        dropdown.hidden = false;
-    }
-
-    function setActive(idx) {
-        const items = [...dropdown.querySelectorAll('.autocomplete-item')];
-        items.forEach((li, i) => li.classList.toggle('active', i === idx));
-        if (idx >= 0 && idx < items.length) inputEl.value = items[idx].textContent;
-    }
-
-    function hide() {
-        dropdown.hidden = true;
-        activeIdx = -1;
-    }
-
-    inputEl.addEventListener('input', () => render(inputEl.value));
-    inputEl.addEventListener('focus', () => { if (inputEl.value) render(inputEl.value); });
-    inputEl.addEventListener('blur', () => setTimeout(hide, 160));
-    inputEl.addEventListener('keydown', (e) => {
-        const items = [...dropdown.querySelectorAll('.autocomplete-item')];
-        if (dropdown.hidden || !items.length) return;
-
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            activeIdx = (activeIdx + 1) % items.length;
-            setActive(activeIdx);
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            activeIdx = (activeIdx - 1 + items.length) % items.length;
-            setActive(activeIdx);
-        } else if (e.key === 'Escape') {
-            e.preventDefault();
-            hide();
-        }
-    });
-}
+// (createAutocomplete ahora se importa desde js/autocomplete.js)
 
 // ── Sistema de tags de ingredientes ─────────────────────────────
 
@@ -241,25 +115,7 @@ function setupQuickTags() {
     });
 }
 
-// Autenticación y control de tema ahora centralizados en `js/ui.js` via `initAuthUI` y `initThemeUI`.
-
-function updateUserUI() {
-    const currentUser = getCurrentUser();
-    
-    if (currentUser) {
-        // Usuario logueado
-        loginOpenBtn.hidden = true;
-        favoritesBtn.hidden = false;
-        logoutBtn.hidden = false;
-        userBtn.textContent = '👤 ' + currentUser;
-    } else {
-        // Usuario no logueado
-        loginOpenBtn.hidden = false;
-        favoritesBtn.hidden = true;
-        logoutBtn.hidden = true;
-        userBtn.textContent = '👤';
-    }
-}
+// updateUserUI viene de initChrome (centralizado en js/ui.js).
 
 function renderFavorites() {
     const favorites = getFavorites();
@@ -361,7 +217,7 @@ function renderResults(recipes) {
             const currentUser = getCurrentUser();
             if (!currentUser) {
                 alert(t('Please login to save favorites'));
-                loginOpenBtn.click();
+                document.getElementById('login-open-btn')?.click();
                 return;
             }
 
