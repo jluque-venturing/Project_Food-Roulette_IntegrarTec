@@ -498,6 +498,15 @@
   flex-wrap: wrap;
 }
 
+/* Botones de la tarjeta de premio: blanco en modo día, negro en modo noche */
+.result-modal__actions .btn {
+  color: #fff;
+}
+
+[data-theme="dark"] .result-modal__actions .btn {
+  color: #1a1a1a;
+}
+
 /* ── Responsive: modal en mobile ────────────────────────────── */
 
 @media (max-width: 480px) {

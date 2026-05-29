@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe — Food Roulette</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/recipe.css" />
+</head>
+
+<body>
+
+  <!-- ── Navegación ─────────────────────────────────────────── -->
+  <header class="header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="../index.html" class="nav-brand">Food Roulette</a>
+      <ul class="nav-links">
+        <li><a href="../index.html" data-translate>Home</a></li>
+        <li><a href="roulette.html" data-translate>Roulette</a></li>
+        <li><a href="about-us.html" data-translate>About us</a></li>
+        <li><a href="contact.html" data-translate>Contact</a></li>
+      </ul>
+      <div class="nav-controls">
+        <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" data-translate-title="Toggle dark mode">🌙</button>
+        <button class="lang-toggle" id="lang-toggle" title="Change language" data-translate-title="Change language">ES</button>
+        <div class="user-menu">
+          <button class="user-btn" id="user-btn" title="User account" data-translate-title="User account">👤</button>
+          <div class="user-dropdown" id="user-dropdown" hidden>
+            <button class="user-menu-item" id="login-open-btn" data-translate>Login</button>
+            <button class="user-menu-item" id="favorites-btn" hidden data-translate>❤️ Favorites</button>
+            <button class="user-menu-item" id="logout-btn" hidden data-translate>Logout</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Modal de Login/Registro -->
+  <div class="modal" id="auth-modal" hidden>
+    <div class="modal-content">
+      <button class="modal-close" id="auth-close-btn">✕</button>
+
+      <div class="auth-container">
+        <div class="auth-tab" id="login-tab" data-tab="login">
+          <h2 data-translate>Login</h2>
+          <form id="login-form">
+            <input type="text" placeholder="Username" id="login-username" required data-translate />
+            <input type="password" placeholder="Password" id="login-password" required data-translate />
+            <button type="submit" class="btn btn--primary" data-translate>Sign In</button>
+          </form>
+          <p class="auth-switch">Don't have an account? <button type="button" class="auth-tab-btn" data-tab="register">Register</button></p>
+          <div class="auth-message" id="login-message"></div>
+        </div>
+
+        <div class="auth-tab" id="register-tab" data-tab="register" hidden>
+          <h2 data-translate>Register</h2>
+          <form id="register-form">
+            <input type="text" placeholder="Username" id="register-username" required data-translate />
+            <input type="password" placeholder="Password" id="register-password" required data-translate />
+            <input type="password" placeholder="Confirm Password" id="register-confirm" required data-translate />
+            <button type="submit" class="btn btn--primary" data-translate>Create Account</button>
+          </form>
+          <p class="auth-switch">Already have an account? <button type="button" class="auth-tab-btn" data-tab="login">Login</button></p>
+          <div class="auth-message" id="register-message"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Contenido principal ────────────────────────────────── -->
+  <main class="recipe-page" id="recipe-page">
+
+    <!-- Encabezado grande con el título de la comida (color dinámico via JS) -->
+    <header class="recipe-hero" id="recipe-hero">
+      <h1 class="recipe-hero__title" id="recipe-title"></h1>
+      <button class="recipe-fav-btn" id="recipe-fav-btn" type="button" aria-label="Add to favorites" data-translate-title="Add to favorites" title="Add to favorites">♡</button>
+    </header>
+
+    <div class="recipe-layout">
+
+      <!-- Aside (35%): imagen de la comida -->
+      <aside class="recipe-aside" aria-label="Recipe image">
+        <div class="recipe-aside__visual" id="recipe-visual"></div>
+      </aside>
+
+      <!-- Columna derecha: tags + pasos -->
+      <section class="recipe-content">
+
+        <section class="recipe-quickinfo" aria-labelledby="quickinfo-heading">
+          <h2 class="sr-only" id="quickinfo-heading" data-translate>Quick info</h2>
+          <ul class="recipe-tags" id="recipe-tags"></ul>
+        </section>
+
+        <section class="recipe-steps" aria-labelledby="steps-heading">
+          <h2 class="recipe-steps__heading" id="steps-heading" data-translate>Steps</h2>
+          <ol class="recipe-steps__list" id="recipe-steps"></ol>
+        </section>
+
+      </section>
+    </div>
+
+  </main>
+
+  <!-- ── Pie de página ──────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p data-translate>Made with love and lots of ingredients · Food Roulette 2026</p>
+  </footer>
+
+  <script type="module" src="../js/recipe.js"></script>
+
+</body>
+
+</html>

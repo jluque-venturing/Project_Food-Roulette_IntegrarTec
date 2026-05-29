@@ -535,12 +535,14 @@ function triggerSpin() {
 // ── Modal de resultado ───────────────────────────────────────────
 
 let prevFocus = null;
+let currentRecipe = null;
 
 function showResult(recipe) {
   const btn = document.getElementById('spin-btn');
   if (btn) { btn.disabled = false; btn.classList.remove('spinning'); }
   document.getElementById('wheel-container')?.classList.remove('spinning');
 
+  currentRecipe = recipe;
   saveToHistory(recipe);
 
   document.getElementById('result-name').textContent = t(recipe.name);
@@ -603,6 +605,13 @@ function setupModal() {
   document.getElementById('spin-again-btn')?.addEventListener('click', () => {
     closeModal();
     setTimeout(triggerSpin, 350);
+  });
+
+  // Ver receta completa: guarda la receta y navega a la página de detalle
+  document.getElementById('view-recipe-btn')?.addEventListener('click', () => {
+    if (!currentRecipe) return;
+    sessionStorage.setItem('fr_selected_recipe', JSON.stringify(currentRecipe));
+    window.location.href = 'recipe.html';
   });
 
   // Focus trap dentro del modal

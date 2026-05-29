@@ -83,6 +83,16 @@ export default {
   "Apply Filters": "Aplicar filtros",
   "Today's food is…": "Hoy comemos…",
   "▶ Spin again": "▶ Girar de nuevo",
+  "View full recipe": "Ver receta completa",
+
+  // recipe.html — página de detalle de receta
+  "Quick info": "Información rápida",
+  "Steps": "Pasos",
+  "Omnivore": "Omnívora",
+  "Budget": "Económica",
+  "No recipe selected yet.": "Todavía no elegiste ninguna receta.",
+  "Spin the wheel to discover a recipe!": "¡Girá la ruleta para descubrir una receta!",
+  "Go to the roulette": "Ir a la ruleta",
 
   // roulette.js — dinámicos
   "Apply filters to": "Aplicá filtros para",
