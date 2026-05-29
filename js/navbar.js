@@ -36,10 +36,10 @@ export function injectNavbar({ active = '' } = {}) {
           ${links}
       </ul>
       <div class="nav-controls">
-        <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" data-translate-title="Toggle dark mode">🌙</button>
-        <button class="lang-toggle" id="lang-toggle" title="Change language" data-translate-title="Change language">ES</button>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode" data-translate-title="Toggle dark mode">🌙</button>
+        <button class="lang-toggle" id="lang-toggle" aria-label="Change language" title="Change language" data-translate-title="Change language">ES</button>
         <div class="user-menu">
-          <button class="user-btn" id="user-btn" title="User account" data-translate-title="User account">👤</button>
+          <button class="user-btn" id="user-btn" aria-label="User account" title="User account" data-translate-title="User account">👤</button>
           <div class="user-dropdown" id="user-dropdown" hidden>
             <button class="user-menu-item" id="login-open-btn" data-translate>Login</button>
             <button class="user-menu-item" id="favorites-btn" hidden data-translate>❤️ Favorites</button>

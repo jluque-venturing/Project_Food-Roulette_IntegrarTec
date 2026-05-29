@@ -452,6 +452,7 @@ export default {
   "Toggle dark mode": "Cambiar modo oscuro",
   "Change language": "Cambiar idioma",
   "User account": "Cuenta de usuario",
+  "Ingredient": "Ingrediente",
   "Add to favorites": "Agregar a favoritos",
 
   // roulette.html — filtros

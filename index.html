@@ -45,6 +45,7 @@
                 </template> <!--Aca vamos a agregar los tags de ingredientes de forma dinámica con JS-->
 
                 <form class="input-row">
+                    <label for="ingredient-input" class="sr-only" data-translate>Ingredient</label>
                     <input
                         class="ingredient-input"
                         id="ingredient-input"
@@ -89,7 +90,7 @@
 
             <section class="results-section" id="results-section">
                 <h2 class="results-title" data-translate>Suggest Recipes</h2>
-                <div id="recipes-grid" class="recipes-grid"><!-- JS inyectará aquí los resultados --></div>
+                <div id="recipes-grid" class="recipes-grid" aria-live="polite" aria-atomic="false"><!-- JS inyectará aquí los resultados --></div>
             </section>
 
             <template id="recipe-template">
