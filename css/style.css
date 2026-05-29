@@ -191,6 +191,8 @@ body {
 /* ── Filter chip activo ──────────────────────────────────────── */
 
 .filter-chip.active { background: var(--accent); color: #fff; }
+
+[data-theme="dark"] .filter-chip.active { color: #1a1a1a; }
 .filter-chip input  { margin-right: 0.3rem; }
 
 /* ── Grilla de recetas ───────────────────────────────────────── */
@@ -288,11 +290,19 @@ body {
     footer { padding: 0 10%; }
 
     .navbar {
-        flex-direction: row;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
     }
 
-    .nav-links {flex-direction: row;}
+    .nav-links {
+        flex-direction: row;
+        justify-self: center;
+    }
+
+    .nav-controls {
+        justify-self: end;
+    }
 
     .input-row {
         flex-direction: row;
@@ -392,6 +402,10 @@ body {
     border: 1px solid #333;
 }
 
+[data-theme="dark"] .auth-tab .btn--primary {
+    color: #1a1a1a;
+}
+
 [data-theme="dark"] .auth-message.error {
     color: #FF7B7B;
     background: rgba(255, 123, 123, 0.15);
@@ -430,9 +444,18 @@ body {
     font-size: 1.25rem;
     cursor: pointer;
     padding: 0.5rem;
-    border-radius: 50%;
     transition: background 0.2s ease;
     color: var(--light_Beige);
+}
+
+.theme-toggle {
+    border-radius: 50%;
+}
+
+.user-btn {
+    border-radius: 999px;
+    padding: 0.5rem;
+    white-space: nowrap;
 }
 
 .theme-toggle:hover,
@@ -639,19 +662,21 @@ body {
 
 .auth-message {
     margin-top: 0.5rem;
-    padding: 0.75rem;
     border-radius: 6px;
     font-size: 0.9rem;
     text-align: center;
-    min-height: 1.5rem;
 }
 
-.auth-message.error {
+.auth-message:not(:empty) {
+    padding: 0.75rem;
+}
+
+.auth-message.error:not(:empty) {
     color: #D64545;
     background: rgba(214, 69, 69, 0.1);
 }
 
-.auth-message:not(.error) {
+.auth-message:not(.error):not(:empty) {
     color: #27AE60;
     background: rgba(39, 174, 96, 0.1);
 }
@@ -682,6 +707,11 @@ body {
 .favorite-btn:hover {
     background: var(--secondary);
     transform: scale(1.15);
+}
+
+[data-theme="dark"] .favorite-btn {
+    color: #F3F4F6;
+    border-color: var(--secondary);
 }
 
 /* ── Responsive ────────────────────────────────────────────────── */

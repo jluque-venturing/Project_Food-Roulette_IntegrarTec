@@ -163,6 +163,16 @@
   font-size: 0.78rem;
 }
 
+[data-theme="dark"] .keyboard-hint {
+  color: #aaa;
+}
+
+[data-theme="dark"] .keyboard-hint kbd {
+  background: #2a2a2a;
+  border-color: #555;
+  color: #ccc;
+}
+
 /* ── Panel de filtros ────────────────────────────────────────── */
 
 .filters-panel {
@@ -192,22 +202,38 @@
 }
 [data-theme="dark"] #include-add-btn,
 [data-theme="dark"] #exclude-add-btn {
-  background: var(--primary);
+  background: var(--accent);
+  color: #1a1a1a;
 }
 [data-theme="dark"] #include-add-btn:hover,
 [data-theme="dark"] #exclude-add-btn:hover {
-  background: #bf3a3a
+  background: #e07b1a;
 }
 
 [data-theme="dark"] #apply-filters-btn {
-  background: var(--primary);
+  background: var(--accent);
+  color: #1a1a1a;
 }
-[data-theme="dark"] #apply-filters-btn:hover{
-  background: #bf3a3a
+[data-theme="dark"] #apply-filters-btn:hover {
+  background: #e07b1a;
 }
 
 
 [data-theme="dark"] .range-markers { color: #999; }
+
+[data-theme="dark"] .result-modal__ingredients li {
+  background: #2a2a2a;
+  border-color: #555;
+  color: #F3F4F6;
+}
+
+[data-theme="dark"] .btn--spin {
+  color: #1a1a1a;
+}
+
+[data-theme="dark"] .btn--secondary {
+  color: #1a1a1a;
+}
 
 .filters-panel__title {
   font-size: 1.2rem;

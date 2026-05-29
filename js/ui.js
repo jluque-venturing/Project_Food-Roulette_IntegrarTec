@@ -36,10 +36,23 @@ export function initAuthUI({
   updateUserUI,
   renderFavorites,
 } = {}) {
+  function clearAuthMessages() {
+    if (loginMessage)    { loginMessage.textContent = '';    loginMessage.classList.remove('error'); }
+    if (registerMessage) { registerMessage.textContent = ''; registerMessage.classList.remove('error'); }
+  }
+
   // Modal open/close
-  loginOpenBtn?.addEventListener('click', () => { if (authModal) authModal.hidden = false; });
-  authCloseBtn?.addEventListener('click', () => { if (authModal) authModal.hidden = true; });
-  authModal?.addEventListener('click', (e) => { if (e.target === authModal) authModal.hidden = true; });
+  loginOpenBtn?.addEventListener('click', () => {
+    if (authModal) authModal.hidden = false;
+    clearAuthMessages();
+  });
+  authCloseBtn?.addEventListener('click', () => {
+    if (authModal) authModal.hidden = true;
+    clearAuthMessages();
+  });
+  authModal?.addEventListener('click', (e) => {
+    if (e.target === authModal) { authModal.hidden = true; clearAuthMessages(); }
+  });
 
   // Tab switching
   document.querySelectorAll('.auth-tab-btn').forEach((btn) => {
@@ -71,6 +84,7 @@ export function initAuthUI({
       setTimeout(() => {
         if (authModal) authModal.hidden = true;
         loginForm.reset();
+        clearAuthMessages();
         updateUserUI?.();
       }, 500);
     } else {
