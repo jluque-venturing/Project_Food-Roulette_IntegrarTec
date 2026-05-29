@@ -11,6 +11,25 @@
 /* ── Reset global - Ocultar elementos con atributo hidden ─── */
 [hidden] { display: none !important; }
 
+/* ── Texto solo para lectores de pantalla (visualmente oculto) ─── */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── Foco visible global para navegación por teclado ─────────── */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
 body {
     background-color: var(--light_Beige);
     color: var(--brown);
@@ -66,12 +85,11 @@ body {
 
 /* Inputs y Botones */
 .input-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-.ingredient-input { 
-    flex: 1; 
-    padding: 0.8rem; 
-    border: 2px solid var(--secondary); 
-    border-radius: 8px; 
-    outline: none;
+.ingredient-input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
 }
 .ingrdient-btn {
     background-color: var(--primary);
@@ -392,6 +410,18 @@ body {
     color: #fff;
 }
 
+/* Modo oscuro: texto oscuro legible sobre los fondos claros de botones/chips */
+[data-theme="dark"] .btn--primary,
+[data-theme="dark"] .ingredient-btn {
+    color: #1a1a1a;
+}
+
+[data-theme="dark"] .quick-tag {
+    background: #2a2a2a;
+    color: #E8E8E8;
+    border-color: var(--secondary);
+}
+
 [data-theme="dark"] .modal {
     background: rgba(0, 0, 0, 0.85);
 }
@@ -638,6 +668,7 @@ body {
 .auth-tab input:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.25);
 }
 
 .auth-switch {

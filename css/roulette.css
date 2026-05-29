@@ -498,9 +498,12 @@
   flex-wrap: wrap;
 }
 
-/* Botones de la tarjeta de premio: blanco en modo día, negro en modo noche */
-.result-modal__actions .btn {
-  color: #fff;
+/* Botones de la tarjeta de premio: texto legible según el color del botón */
+.result-modal__actions .btn--primary {
+  color: #fff;            /* rojo + blanco: contraste OK */
+}
+.result-modal__actions .btn--secondary {
+  color: var(--brown);    /* dorado + marrón oscuro: ~5:1, cumple AA */
 }
 
 [data-theme="dark"] .result-modal__actions .btn {
@@ -523,9 +526,4 @@
   }
 }
 
-/* ── Focus visible global para accesibilidad ────────────────── */
-
-:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 3px;
-}
+/* El :focus-visible global ahora vive en style.css (lo cargan todas las páginas) */
