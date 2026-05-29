@@ -6,6 +6,10 @@ const AVAILABLE_LANGS = ['en', 'es'];
 
 let dictionary = {};
 
+// Remembers each element's original (English) aria-label so it can be
+// re-translated on language switch without losing the original key.
+const ariaOriginals = new WeakMap();
+
 export function getLang() {
     return localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
 }
@@ -53,5 +57,15 @@ export function translatePage() {
             element.setAttribute('data-translate-title', key);
         }
         element.title = t(key);
+    });
+
+    // Automatically translate every aria-label, caching the original key.
+    document.querySelectorAll('[aria-label]').forEach(element => {
+        let key = ariaOriginals.get(element);
+        if (key === undefined) {
+            key = element.getAttribute('aria-label');
+            ariaOriginals.set(element, key);
+        }
+        element.setAttribute('aria-label', t(key));
     });
 }

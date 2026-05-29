@@ -433,6 +433,21 @@ export default {
   "Rub each toast slice with a cut garlic clove.": "Frotar cada rebanada tostada con un diente de ajo cortado.",
   "Spoon the tomato mixture onto the toasts and serve immediately.": "Colocar la mezcla de tomate sobre las tostadas y servir de inmediato.",
 
+  "Contact Information": "Información de contacto",
+
+  // aria-label (accesibilidad)
+  "Main navigation": "Navegación principal",
+  "Ingredients selected": "Ingredientes seleccionados",
+  "Interactive food roulette wheel": "Ruleta de comida interactiva",
+  "Spin the roulette": "Girar la ruleta",
+  "Roulette configuration": "Configuración de la ruleta",
+  "Add required ingredient": "Agregar ingrediente requerido",
+  "Required ingredients": "Ingredientes requeridos",
+  "Add excluded ingredient": "Agregar ingrediente excluido",
+  "Excluded ingredients": "Ingredientes excluidos",
+  "Close result": "Cerrar resultado",
+  "Recipe image": "Imagen de la receta",
+
   // Tooltips (title attribute)
   "Toggle dark mode": "Cambiar modo oscuro",
   "Change language": "Cambiar idioma",
