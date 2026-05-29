@@ -16,6 +16,7 @@ export function getLang() {
 
 export function setLang(lang) {
     localStorage.setItem(LANG_KEY, lang);
+    document.documentElement.lang = lang;
 }
 
 export async function loadDictionary() {
@@ -35,6 +36,9 @@ export function t(key) {
 }
 
 export function translatePage() {
+    // Mantener el atributo lang del <html> sincronizado con el idioma activo
+    document.documentElement.lang = getLang();
+
     document.querySelectorAll('[data-translate]').forEach(element => {
         let key = element.getAttribute('data-translate');
         if (!key) {
