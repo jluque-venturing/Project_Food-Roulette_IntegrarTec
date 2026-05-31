@@ -146,10 +146,11 @@ function renderFavorites() {
         });
 
         const favRecipeBtn = article.querySelector('.recipe-btn');
-        favRecipeBtn.textContent = t('Show more');
-        favRecipeBtn.addEventListener('click', () =>
-            toggleDetails(article, recipe)
-        );
+        favRecipeBtn.textContent = t('View full recipe');
+        favRecipeBtn.addEventListener('click', () => {
+            sessionStorage.setItem('fr_selected_recipe', JSON.stringify(recipe));
+            window.location.href = 'pages/recipe.html';
+        });
 
         favoritesGrid.appendChild(fragment);
     });

@@ -38,6 +38,8 @@
   color: #fff;
   line-height: 1.15;
   margin: 0;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 /* Botón de favoritos en el encabezado */
@@ -247,13 +249,26 @@
 /* ── Responsive: encabezado en mobile ─────────────────────────── */
 
 @media (max-width: 480px) {
+  .recipe-page {
+    padding: 0 0.75rem 2rem;
+  }
+
   .recipe-hero {
-    padding: 1.5rem 1.25rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .recipe-hero__title {
+    font-size: clamp(1.4rem, 6vw, 2rem);
   }
 
   .recipe-fav-btn {
     width: 44px;
     height: 44px;
     font-size: 1.3rem;
+  }
+
+  .recipe-aside__visual {
+    position: static;
+    aspect-ratio: 4 / 3;
   }
 }
