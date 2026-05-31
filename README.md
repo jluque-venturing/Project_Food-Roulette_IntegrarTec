@@ -219,6 +219,13 @@ Project_Food-Roulette_IntegrarTec/
 
 ---
 
+## Uso de Inteligencia Artificial
+
+Durante el desarrollo se utilizaron herramientas de IA como apoyo.
+El detalle completo se encuentra en el [Informe de uso de IA (IA_HISTORY.md)](IA_HISTORY.md).
+
+---
+
 
 ## Agradecimientos
 
