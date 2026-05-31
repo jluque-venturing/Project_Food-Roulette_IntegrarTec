@@ -249,3 +249,22 @@ export function initChrome({ active = '', showFavorites = false, renderFavorites
   update();
   return { updateUserUI: update };
 }
+
+// ── Toast de retroalimentación ────────────────────────────────
+let _toastTimer = null;
+
+export function showToast(msg) {
+  let toast = document.getElementById('fr-toast');
+  if (!toast) {
+    toast = document.createElement('p');
+    toast.id = 'fr-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    toast.hidden = true;
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.hidden = false;
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { toast.hidden = true; }, 3500);
+}

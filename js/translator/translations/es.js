@@ -454,6 +454,7 @@ export default {
   "User account": "Cuenta de usuario",
   "Ingredient": "Ingrediente",
   "Add to favorites": "Agregar a favoritos",
+  "Remove from favorites": "Quitar de favoritos",
 
   // roulette.html — filtros
   "Max time:": "Tiempo máximo:",

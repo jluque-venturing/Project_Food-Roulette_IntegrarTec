@@ -1,7 +1,7 @@
 import { getRecipes, getIngredients, saveLocalRecipe } from './storage.js';
 import { applyFilters } from './filters.js';
 import { getCurrentUser, addFavorite, removeFavorite, getFavorites, isFavorite } from './auth.js';
-import { initChrome } from './ui.js';
+import { initChrome, showToast } from './ui.js';
 import { createAutocomplete } from './autocomplete.js';
 import { initLang } from './lang.js';
 import { t } from './translator/translator.js';
@@ -211,12 +211,17 @@ function renderResults(recipes) {
 
         // Botón de favoritos
         const favoriteBtn = article.querySelector('.favorite-btn');
+        const setFavLabel = (fav) => {
+            const label = fav ? t('Remove from favorites') : t('Add to favorites');
+            favoriteBtn.title = label;
+            favoriteBtn.setAttribute('aria-label', label);
+        };
         favoriteBtn.textContent = isFavorite(recipe.id) ? '❤️' : '♡';
-        favoriteBtn.title = t('Add to favorites');
+        setFavLabel(isFavorite(recipe.id));
         favoriteBtn.addEventListener('click', () => {
             const currentUser = getCurrentUser();
             if (!currentUser) {
-                alert(t('Please login to save favorites'));
+                showToast(t('Please login to save favorites'));
                 document.getElementById('login-open-btn')?.click();
                 return;
             }
@@ -224,12 +229,14 @@ function renderResults(recipes) {
             if (isFavorite(recipe.id)) {
                 removeFavorite(recipe.id);
                 favoriteBtn.textContent = '♡';
+                setFavLabel(false);
             } else {
                 const result = addFavorite(recipe);
                 if (result.success) {
                     favoriteBtn.textContent = '❤️';
+                    setFavLabel(true);
                 } else {
-                    alert(result.error);
+                    showToast(result.error);
                 }
             }
         });
@@ -252,7 +259,7 @@ function toggleDetails(article, recipe) {
     if (recipe.image) {
         const img = document.createElement('img');
         img.src = recipe.image;
-        img.alt = recipe.name;
+        img.alt = t(recipe.name);
         img.className = 'recipe-image';
         div.appendChild(img);
     }
@@ -304,7 +311,7 @@ function checkSharedRecipe() {
 
         if (window.confirm(`${t('You received a shared recipe:')} "${recipe.name}". ${t('Save it?')}`)) {
             saveLocalRecipe(recipe);
-            alert(`"${recipe.name}" ${t('saved!')}`);
+            showToast(`"${recipe.name}" ${t('saved!')}`);
         }
     } catch {
         // Parámetro inválido — ignorar

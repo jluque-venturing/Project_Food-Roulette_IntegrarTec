@@ -3,7 +3,7 @@
 // y arma el encabezado, la imagen, los tags y los pasos.
 
 import { getLang, setLang, loadDictionary, translatePage, t } from './translator/translator.js';
-import { initChrome } from './ui.js';
+import { initChrome, showToast } from './ui.js';
 import { addFavorite, removeFavorite, isFavorite, getCurrentUser } from './auth.js';
 
 const SELECTED_KEY = 'fr_selected_recipe';
@@ -147,6 +147,9 @@ function refreshFavButton(recipe) {
   const fav = isFavorite(recipe.id);
   btn.textContent = fav ? '❤️' : '♡';
   btn.classList.toggle('is-favorite', fav);
+  const label = fav ? t('Remove from favorites') : t('Add to favorites');
+  btn.setAttribute('aria-label', label);
+  btn.title = label;
 }
 
 function setupFavButton(recipe) {
@@ -156,7 +159,7 @@ function setupFavButton(recipe) {
 
   btn.addEventListener('click', () => {
     if (!getCurrentUser()) {
-      alert(t('Please login to save favorites'));
+      showToast(t('Please login to save favorites'));
       document.getElementById('login-open-btn')?.click();
       return;
     }
@@ -164,7 +167,7 @@ function setupFavButton(recipe) {
       removeFavorite(recipe.id);
     } else {
       const result = addFavorite(recipe);
-      if (!result.success) { alert(result.error); return; }
+      if (!result.success) { showToast(result.error); return; }
     }
     refreshFavButton(recipe);
   });
