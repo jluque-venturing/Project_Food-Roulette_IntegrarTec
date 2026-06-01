@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Contact — Food Roulette</title>
+        <link rel="stylesheet" href="../css/style.css" />
+        <link rel="stylesheet" href="../css/contact.css"/>
+    </head>
+
+    <body>
+
+        <!-- ── Navegación ─────────────────────────────────────────── -->
+        <!-- header (navbar): se inyecta desde js/navbar.js -->
+
+        <!-- Modal de Login/Registro: se inyecta desde js/auth-modal.js -->
+
+        <!-- ── Contenido principal ────────────────────────────────── -->
+        <main>
+            <section class="hero">
+                <h1 class="hero-title" data-translate>Contact Us</h1>
+                <p class="hero-subtitle" data-translate>
+                    We'd love to hear from you. Send us a message!
+                </p>
+            </section>
+
+            <article class="contact-container">
+                <form class="contact-form" id="contact-form">
+                    <fieldset>
+                        <legend class="sr-only" data-translate>Contact Information</legend>
+                        <div class="form-group">
+                            <label for="name" data-translate>Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name" data-translate />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" data-translate>Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com" data-translate />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject" data-translate>Subject *</label>
+                            <input type="text" id="subject" name="subject" required placeholder="How can we help?" data-translate />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" data-translate>Message *</label>
+                            <textarea id="message" name="message" required placeholder="Tell us more..." data-translate></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary" data-translate>Send Message</button>
+                    </fieldset>
+                </form>
+
+                <aside class="contact-info">
+                    <h2 data-translate>Get in Touch</h2>
+                    <address class="info-item">
+                        <h3>Email</h3>
+                        <p>
+                            <a href="mailto:hello@foodroulette.com">hello@foodroulette.com</a>
+                        </p>
+                    </address>
+
+                    <div class="info-item">
+                        <h3 data-translate>Follow Us</h3>
+                        <p data-translate>
+                            Connect with us on social media for recipes, tips, and inspiration!
+                        </p>
+                    </div>
+                </aside>
+            </article>
+        </main>
+
+        <!-- ── Pie de página ───────────────────────────────────────── -->
+        <!-- footer: se inyecta desde js/navbar.js -->
+        <script type="module" src="../js/contact.js"></script>
+        <script type="module" src="../js/theme.js"></script>
+        <script type="module" src="../js/auth.js"></script>
+    </body>
+
+</html>

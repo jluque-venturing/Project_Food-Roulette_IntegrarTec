@@ -1,0 +1,550 @@
+/* ================================================================
+   ROULETTE PAGE — layout, wheel, filters, modal
+   ================================================================ */
+
+/* ── Layout de dos columnas ──────────────────────────────────── */
+
+.roulette-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem 0;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .roulette-page {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2rem 0;
+  }
+
+  .roulette-section {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .filters-panel {
+    width: 300px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .filters-panel {
+    width: 320px;
+  }
+}
+
+/* ── Sección de la ruleta ────────────────────────────────────── */
+
+.roulette-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.roulette-title {
+  font-size: 2rem;
+  color: var(--primary);
+  text-align: center;
+}
+
+/* ── Contenedor del canvas y la aguja ────────────────────────── */
+
+.wheel-container {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 18px;      /* espacio para la aguja */
+}
+
+/* Aguja triangular fija apuntando hacia abajo */
+.wheel-pointer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left:  13px solid transparent;
+  border-right: 13px solid transparent;
+  border-top:   22px solid var(--primary);
+  z-index: 10;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+  transition: filter 0.3s ease;
+}
+
+.wheel-container.spinning .wheel-pointer {
+  filter:
+    drop-shadow(0 0 8px var(--accent))
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+}
+
+/* El tamaño del canvas lo setea JS via inline style (necesario para DPR correcto) */
+#roulette-canvas {
+  display: block;
+  border-radius: 50%;
+  transition: filter 0.4s ease;
+}
+
+.wheel-container.spinning #roulette-canvas {
+  filter: drop-shadow(0 0 18px rgba(224, 161, 0, 0.45));
+}
+
+/* ── Estado de la ruleta ─────────────────────────────────────── */
+
+.roulette-status {
+  text-align: center;
+  min-height: 44px;
+}
+
+.roulette-hint {
+  color: var(--brown);
+  font-size: 1rem;
+}
+
+.roulette-count {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* ── Botón de giro ───────────────────────────────────────────── */
+
+.btn--spin {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0.9rem 3rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(214, 69, 69, 0.4);
+}
+
+.btn--spin:hover:not(:disabled) {
+  background: #bf3a3a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(214, 69, 69, 0.5);
+}
+
+.btn--spin:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn--spin:disabled,
+.btn--spin.spinning {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.keyboard-hint {
+  font-size: 0.8rem;
+  color: #999;
+  text-align: center;
+}
+
+.keyboard-hint kbd {
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: inherit;
+  font-size: 0.78rem;
+}
+
+[data-theme="dark"] .keyboard-hint {
+  color: #aaa;
+}
+
+[data-theme="dark"] .keyboard-hint kbd {
+  background: #2a2a2a;
+  border-color: #555;
+  color: #ccc;
+}
+
+/* ── Panel de filtros ────────────────────────────────────────── */
+
+.filters-panel {
+  background: #fff;
+  border: 1px solid #e8d8c8;
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 2px 12px rgba(74, 44, 36, 0.08);
+}
+
+/* Dark-mode adjustments specific to roulette filters panel for better contrast */
+[data-theme="dark"] .filters-panel {
+  background: var(--light_Beige);
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+[data-theme="dark"] .filter-select,
+[data-theme="dark"] .filter-text-input,
+[data-theme="dark"] .filter-add-btn {
+  background: #151515;
+  border-color: #F28C28;
+  color: var(--brown);
+}
+[data-theme="dark"] #include-add-btn,
+[data-theme="dark"] #exclude-add-btn {
+  background: var(--accent);
+  color: #1a1a1a;
+}
+[data-theme="dark"] #include-add-btn:hover,
+[data-theme="dark"] #exclude-add-btn:hover {
+  background: #e07b1a;
+}
+
+[data-theme="dark"] #apply-filters-btn {
+  background: var(--accent);
+  color: #1a1a1a;
+}
+[data-theme="dark"] #apply-filters-btn:hover {
+  background: #e07b1a;
+}
+
+
+[data-theme="dark"] .range-markers { color: #999; }
+
+[data-theme="dark"] .result-modal__ingredients li {
+  background: #2a2a2a;
+  border-color: #555;
+  color: #F3F4F6;
+}
+
+[data-theme="dark"] .btn--spin {
+  color: #1a1a1a;
+}
+
+[data-theme="dark"] .btn--secondary {
+  color: #1a1a1a;
+}
+
+.filters-panel__title {
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin: 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--light_Beige);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filter-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--brown);
+}
+
+.filter-select {
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid var(--secondary);
+  border-radius: 8px;
+  background: var(--light_Beige);
+  color: var(--brown);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Slider */
+.filter-range {
+  width: 100%;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.range-markers {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #aaa;
+  margin-top: -4px;
+}
+
+/* Input + botón de tags en el panel */
+.filter-input-row {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.filter-text-input {
+  flex: 1;
+  padding: 0.45rem 0.7rem;
+  border: 1.5px solid var(--secondary);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  background: var(--light_Beige);
+  color: var(--brown);
+}
+
+.filter-text-input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.filter-add-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--secondary);
+  color: var(--brown);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.filter-add-btn:hover { background: #c48d00; }
+.filter-add-btn:focus { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* Tags del panel (reutiliza .ingredient-tag de style.css) */
+#include-tags .ingredient-tag,
+#exclude-tags .ingredient-tag {
+  background: var(--accent);
+  color: white;
+}
+
+/* ================================================================
+   MODAL DE RESULTADO
+   ================================================================ */
+
+.result-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.result-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Fondo translúcido con blur */
+.result-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(74, 44, 36, 0.72);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Tarjeta del resultado */
+.result-modal__content {
+  position: relative;
+  z-index: 1;
+  background: var(--light_Beige);
+  border-radius: 20px;
+  padding: 2rem 1.75rem;
+  max-width: 480px;
+  width: 92%;
+  max-height: 88vh;
+  overflow-y: auto;
+  transform: scale(0.75);
+  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.result-modal.active .result-modal__content {
+  transform: scale(1);
+}
+
+/* Botón de cierre */
+.result-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1.5px solid var(--brown);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--brown);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.result-modal__close:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.result-modal__close:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.result-modal__label {
+  font-size: 0.9rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.25rem;
+}
+
+.result-modal__name {
+  font-size: 2rem;
+  color: var(--primary);
+  line-height: 1.2;
+  margin: 0 0 1.25rem;
+  padding-right: 2.5rem;
+}
+
+/* Imagen o emoji */
+.result-modal__visual {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.result-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.result-modal__emoji {
+  font-size: 5rem;
+  line-height: 1;
+}
+
+/* Info */
+.result-modal__time {
+  font-size: 0.95rem;
+  color: var(--brown);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.result-modal__ingredients-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--brown);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.result-modal__ingredients {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  padding: 0;
+}
+
+.result-modal__ingredients li {
+  background: #fff;
+  border: 1px solid var(--secondary);
+  border-radius: 20px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.82rem;
+  color: var(--brown);
+}
+
+/* Acciones del modal */
+.result-modal__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Botones de la tarjeta de premio: texto legible según el color del botón */
+.result-modal__actions .btn--primary {
+  color: #fff;            /* rojo + blanco: contraste OK */
+}
+.result-modal__actions .btn--secondary {
+  color: var(--brown);    /* dorado + marrón oscuro: ~5:1, cumple AA */
+}
+
+[data-theme="dark"] .result-modal__actions .btn {
+  color: #1a1a1a;
+}
+
+/* ── Responsive: modal en mobile ────────────────────────────── */
+
+@media (max-width: 480px) {
+  .result-modal__content {
+    padding: 1.25rem 1rem;
+    width: 96%;
+    max-height: 90vh;
+  }
+
+  .result-modal__name {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .result-modal__visual {
+    aspect-ratio: 2 / 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .result-modal__emoji {
+    font-size: 3rem;
+  }
+
+  .result-modal__ingredients {
+    margin-bottom: 1rem;
+  }
+
+  .result-modal__actions {
+    gap: 0.5rem;
+  }
+
+  .result-modal__actions .btn {
+    font-size: 0.88rem;
+    padding: 0.55rem 1rem;
+  }
+}
+
+/* El :focus-visible global ahora vive en style.css (lo cargan todas las páginas) */

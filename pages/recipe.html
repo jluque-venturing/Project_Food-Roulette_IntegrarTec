@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe — Food Roulette</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/recipe.css" />
+</head>
+
+<body>
+
+  <!-- ── Navegación ─────────────────────────────────────────── -->
+  <!-- header (navbar): se inyecta desde js/navbar.js -->
+
+  <!-- Modal de Login/Registro: se inyecta desde js/auth-modal.js -->
+
+  <!-- ── Contenido principal ────────────────────────────────── -->
+  <main class="recipe-page" id="recipe-page">
+
+    <!-- Encabezado grande con el título de la comida (color dinámico via JS) -->
+    <header class="recipe-hero" id="recipe-hero">
+      <h1 class="recipe-hero__title" id="recipe-title"></h1>
+      <button class="recipe-fav-btn" id="recipe-fav-btn" type="button" aria-label="Add to favorites" data-translate-title="Add to favorites" title="Add to favorites">♡</button>
+    </header>
+
+    <div class="recipe-layout">
+
+      <!-- Aside (35%): imagen de la comida -->
+      <aside class="recipe-aside" aria-label="Recipe image">
+        <div class="recipe-aside__visual" id="recipe-visual"></div>
+      </aside>
+
+      <!-- Columna derecha: tags + pasos -->
+      <section class="recipe-content">
+
+        <section class="recipe-quickinfo" aria-label="Quick info">
+          <ul class="recipe-tags" id="recipe-tags"></ul>
+        </section>
+
+        <section class="recipe-steps" aria-labelledby="steps-heading">
+          <h2 class="recipe-steps__heading" id="steps-heading" data-translate>Steps</h2>
+          <ol class="recipe-steps__list" id="recipe-steps"></ol>
+        </section>
+
+      </section>
+    </div>
+
+  </main>
+
+  <!-- ── Pie de página ──────────────────────────────────────── -->
+  <!-- footer: se inyecta desde js/navbar.js -->
+
+  <script type="module" src="../js/recipe.js"></script>
+
+</body>
+
+</html>

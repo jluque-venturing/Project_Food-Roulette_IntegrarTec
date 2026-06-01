@@ -1,11 +1,111 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Roulette</title>
-</head>
-<body>
-    
-</body>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Food Roulette</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <!-- header (navbar): se inyecta desde js/navbar.js -->
+
+        <!-- Modal de Login/Registro: se inyecta desde js/auth-modal.js -->
+
+        <!-- Modal de Favoritos -->
+        <div class="modal" id="favorites-modal" hidden>
+            <div class="modal-content modal-large">
+                <button class="modal-close" id="favorites-close-btn">✕</button>
+                <h2 data-translate>My Favorite Recipes</h2>
+                <div id="favorites-grid" class="recipes-grid"><!-- JS inyectará favoritos aquí --></div>
+            </div>
+        </div>
+
+        <main>
+            <section class="hero">
+                <p class="hero-text" data-translate>¿What do you have in the Fridge?</p>
+                <h1 class="hero-title">
+                    <span data-translate>Turn your</span> <em data-translate>ingredients</em><br/><span data-translate>into a delicious recipe</span>
+                </h1>
+                <p class="hero-subtitle" data-translate>
+                    Enter what you have available and we´ll recommend the best recipe instantly.
+                </p>
+            </section>
+
+            <section class="search-section">
+                <h2 data-translate>Your Ingredients</h2>
+                <p data-translate>Type your ingredients and press Enter to add them</p>
+                <ul class="tags-container" id="tags-container" aria-label="Ingredients selected">   <!-- Los ingredientes inyectados por JS irán aquí como <li> --></ul>
+
+                <template id="ingredient-tag-template">
+                    <li class="ingredient-tag">
+                        <span class="tag-text"></span>
+                        <button class="remove-btn" aria-label="Eliminar ingrediente">X</button>
+                    </li>
+                </template> <!--Aca vamos a agregar los tags de ingredientes de forma dinámica con JS-->
+
+                <form class="input-row">
+                    <label for="ingredient-input" class="sr-only" data-translate>Ingredient</label>
+                    <input
+                        class="ingredient-input"
+                        id="ingredient-input"
+                        type="text"
+                        placeholder="Ej: onion, Chicken, lemon…"
+                        data-translate
+                    />
+                    <button class="ingredient-btn" id="ingredient-btn" data-translate>+ Add</button>
+                </form>
+
+                <div class="filters">
+                    <span class="filters__label" data-translate>Type of food:</span>
+                    <label class="filter-chip">
+                        <input type="checkbox" /> <span data-translate>Fast</span>
+                    </label>
+                    <label class="filter-chip">
+                        <input type="checkbox" checked /> <span data-translate>Vegetarian</span>
+                    </label>
+                    <label class="filter-chip">
+                        <input type="checkbox" /> <span data-translate>TACC-FREE</span>
+                    </label>
+                    <label class="filter-chip">
+                        <input type="checkbox" /> <span data-translate>Saving</span>
+                    </label>
+                </div>
+
+                <div class="quick-tags">
+                    <span class="quick-tags__label" data-translate>Suggest:</span>
+                    <button class="quick-tag" data-translate>🧅 Onion</button>
+                    <button class="quick-tag" data-translate>🧄 Garlic</button>
+                    <button class="quick-tag" data-translate>🍅 Tomatoe</button>
+                    <button class="quick-tag" data-translate>🥚 Egg</button>
+                    <button class="quick-tag" data-translate>🫙 Rice</button>
+                    <button class="quick-tag" data-translate>🐔 Chicken</button>
+                    <button class="quick-tag" data-translate>🧀 Cheese</button>
+                </div>
+
+                <button class="btn btn--primary" id="search-btn" data-translate>
+                    Find Recipes
+                </button>
+            </section>
+
+            <section class="results-section" id="results-section">
+                <h2 class="results-title" data-translate>Suggest Recipes</h2>
+                <div id="recipes-grid" class="recipes-grid" aria-live="polite" aria-atomic="false"><!-- JS inyectará aquí los resultados --></div>
+            </section>
+
+            <template id="recipe-template">
+                <article class="recipe-card">
+                    <h3 class="recipe-title"></h3>
+                    <p class="recipe-description"></p>
+                    <div class="recipe-actions">
+                        <button class="recipe-btn">Show more</button>
+                        <button class="favorite-btn" title="Add to favorites">♡</button>
+                    </div>
+                </article>
+            </template>
+        </main>
+
+        <!-- footer: se inyecta desde js/navbar.js -->
+    <script type="module" src="js/script.js"></script>
+    </body>
 </html>

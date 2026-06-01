@@ -1,0 +1,270 @@
+import { initTheme as themeInit, toggleTheme } from './theme.js';
+import { login, register, logout, getCurrentUser, getFavorites } from './auth.js';
+import { t } from './translator/translator.js';
+import { injectAuthModal } from './auth-modal.js';
+import { injectNavbar, injectFooter } from './navbar.js';
+
+// Inicializa el control del tema usando un elemento toggle (botón)
+export function initThemeUI({ toggleEl } = {}) {
+  // Asegurar que el estado del tema esté sincronizado
+  themeInit();
+
+  if (!toggleEl) return;
+
+  toggleEl.addEventListener('click', () => {
+    const theme = toggleTheme();
+    toggleEl.textContent = theme === 'dark' ? '☀️' : '🌙';
+  });
+
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  toggleEl.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+}
+
+// Inicializa la UI de autenticación. Recibe referencias a elementos y callbacks para actualizar UI locales.
+export function initAuthUI({
+  loginOpenBtn,
+  authModal,
+  authCloseBtn,
+  loginForm,
+  registerForm,
+  loginMessage,
+  registerMessage,
+  userBtn,
+  userDropdown,
+  logoutBtn,
+  favoritesBtn,
+  favoritesModal,
+  favoritesCloseBtn,
+  updateUserUI,
+  renderFavorites,
+} = {}) {
+  function clearAuthMessages() {
+    if (loginMessage)    { loginMessage.textContent = '';    loginMessage.classList.remove('error'); }
+    if (registerMessage) { registerMessage.textContent = ''; registerMessage.classList.remove('error'); }
+  }
+
+  // Modal open/close con manejo de foco (diálogo accesible)
+  let authPrevFocus = null;
+
+  // Elementos enfocables visibles dentro del modal (excluye la pestaña oculta)
+  function authFocusables() {
+    if (!authModal) return [];
+    return [...authModal.querySelectorAll('button, input, select, textarea, [href]')]
+      .filter((el) => !el.disabled && el.offsetParent !== null);
+  }
+
+  function openAuthModal() {
+    if (!authModal) return;
+    authPrevFocus = document.activeElement;   // recordar quién abrió
+    authModal.hidden = false;
+    clearAuthMessages();
+    authFocusables()[0]?.focus();             // mover el foco al modal
+  }
+
+  function closeAuthModal() {
+    if (!authModal) return;
+    authModal.hidden = true;
+    clearAuthMessages();
+    authPrevFocus?.focus?.();                 // devolver el foco al disparador
+  }
+
+  loginOpenBtn?.addEventListener('click', openAuthModal);
+  authCloseBtn?.addEventListener('click', closeAuthModal);
+  authModal?.addEventListener('click', (e) => {
+    if (e.target === authModal) closeAuthModal();
+  });
+
+  // Focus trap + Escape para cerrar
+  authModal?.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); closeAuthModal(); return; }
+    if (e.key !== 'Tab') return;
+    const f = authFocusables();
+    if (!f.length) return;
+    const first = f[0];
+    const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  // Tab switching
+  document.querySelectorAll('.auth-tab-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tab = btn.getAttribute('data-tab');
+      document.querySelectorAll('.auth-tab').forEach(t => t.hidden = true);
+      const el = document.getElementById(`${tab}-tab`);
+      if (el) { el.hidden = false; el.querySelector('input')?.focus(); }
+      const msg = document.getElementById(`${tab}-message`);
+      if (msg) msg.textContent = '';
+    });
+  });
+
+  // Login
+  loginForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const usernameEl = loginForm.querySelector('#login-username');
+    const passwordEl = loginForm.querySelector('#login-password');
+    const username = usernameEl?.value;
+    const password = passwordEl?.value;
+
+    const result = login(username, password);
+    if (result.success) {
+      if (loginMessage) {
+        loginMessage.textContent = '✓ ' + result.message;
+        loginMessage.classList.remove('error');
+      }
+      setTimeout(() => {
+        if (authModal) authModal.hidden = true;
+        loginForm.reset();
+        clearAuthMessages();
+        updateUserUI?.();
+      }, 500);
+    } else {
+      if (loginMessage) {
+        loginMessage.textContent = '✗ ' + result.error;
+        loginMessage.classList.add('error');
+      }
+    }
+  });
+
+  // Register
+  registerForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const usernameEl = registerForm.querySelector('#register-username');
+    const passwordEl = registerForm.querySelector('#register-password');
+    const confirmEl = registerForm.querySelector('#register-confirm');
+    const username = usernameEl?.value;
+    const password = passwordEl?.value;
+    const confirm = confirmEl?.value;
+
+    if (password !== confirm) {
+      if (registerMessage) {
+        registerMessage.textContent = `✗ ${t('Passwords do not match')}`;
+        registerMessage.classList.add('error');
+      }
+      return;
+    }
+
+    const result = register(username, password);
+    if (result.success) {
+      if (registerMessage) {
+        registerMessage.textContent = '✓ ' + result.message;
+        registerMessage.classList.remove('error');
+      }
+      setTimeout(() => {
+        document.querySelectorAll('.auth-tab').forEach(t => t.hidden = true);
+        const loginTab = document.getElementById('login-tab');
+        if (loginTab) loginTab.hidden = false;
+        registerForm.reset();
+      }, 500);
+    } else {
+      if (registerMessage) {
+        registerMessage.textContent = '✗ ' + result.error;
+        registerMessage.classList.add('error');
+      }
+    }
+  });
+
+  // User menu toggle
+  userBtn?.addEventListener('click', () => {
+    if (userDropdown) userDropdown.hidden = !userDropdown.hidden;
+  });
+
+  logoutBtn?.addEventListener('click', () => {
+    logout();
+    updateUserUI?.();
+    if (userDropdown) userDropdown.hidden = true;
+  });
+
+  // Favorites modal
+  favoritesBtn?.addEventListener('click', () => {
+    if (favoritesModal) {
+      favoritesModal.hidden = false;
+      renderFavorites?.();
+    }
+  });
+  favoritesCloseBtn?.addEventListener('click', () => { if (favoritesModal) favoritesModal.hidden = true; });
+  favoritesModal?.addEventListener('click', (e) => { if (e.target === favoritesModal) favoritesModal.hidden = true; });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.user-menu') && userDropdown) userDropdown.hidden = true;
+  });
+}
+
+// ── Estado de la barra de usuario (login/logout) ─────────────────
+// Refleja en la navbar si hay sesión iniciada. `showFavorites`: solo el index
+// muestra el botón de favoritos cuando hay un usuario logueado.
+export function updateUserUI({ showFavorites = false } = {}) {
+  const currentUser = getCurrentUser();
+  const loginOpenBtn = document.getElementById('login-open-btn');
+  const favoritesBtn = document.getElementById('favorites-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+  const userBtn = document.getElementById('user-btn');
+
+  if (currentUser) {
+    if (loginOpenBtn) loginOpenBtn.hidden = true;
+    if (favoritesBtn) favoritesBtn.hidden = !showFavorites;
+    if (logoutBtn) logoutBtn.hidden = false;
+    if (userBtn) userBtn.textContent = '👤 ' + currentUser;
+  } else {
+    if (loginOpenBtn) loginOpenBtn.hidden = false;
+    if (favoritesBtn) favoritesBtn.hidden = true;
+    if (logoutBtn) logoutBtn.hidden = true;
+    if (userBtn) userBtn.textContent = '👤';
+  }
+}
+
+// ── Init unificado del "chrome" compartido ───────────────────────
+// Inyecta navbar + footer + modal de login y cablea tema + auth.
+// Cada página lo llama una sola vez. Devuelve { updateUserUI } por si la
+// página necesita refrescar el estado luego (p. ej. tras loguear).
+export function initChrome({ active = '', showFavorites = false, renderFavorites = null, onUserUpdate = null } = {}) {
+  injectNavbar({ active });
+  injectFooter();
+  injectAuthModal();
+
+  initThemeUI({ toggleEl: document.getElementById('theme-toggle') });
+
+  const update = () => { updateUserUI({ showFavorites }); onUserUpdate?.(); };
+
+  initAuthUI({
+    loginOpenBtn: document.getElementById('login-open-btn'),
+    authModal: document.getElementById('auth-modal'),
+    authCloseBtn: document.getElementById('auth-close-btn'),
+    loginForm: document.getElementById('login-form'),
+    registerForm: document.getElementById('register-form'),
+    loginMessage: document.getElementById('login-message'),
+    registerMessage: document.getElementById('register-message'),
+    userBtn: document.getElementById('user-btn'),
+    userDropdown: document.getElementById('user-dropdown'),
+    logoutBtn: document.getElementById('logout-btn'),
+    favoritesBtn: document.getElementById('favorites-btn'),
+    favoritesModal: document.getElementById('favorites-modal'),
+    favoritesCloseBtn: document.getElementById('favorites-close-btn'),
+    updateUserUI: update,
+    renderFavorites,
+  });
+
+  update();
+  return { updateUserUI: update };
+}
+
+// ── Toast de retroalimentación ────────────────────────────────
+let _toastTimer = null;
+
+export function showToast(msg) {
+  let toast = document.getElementById('fr-toast');
+  if (!toast) {
+    toast = document.createElement('p');
+    toast.id = 'fr-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    toast.hidden = true;
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.hidden = false;
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { toast.hidden = true; }, 3500);
+}
