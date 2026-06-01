@@ -1,62 +1,81 @@
 ## Alex Sanchez
-### Lo que le pedí a la IA
+### ¿Qué herramientas de IA utilicé?
 
-1. Actúa como experto en desarrollo web. ¿Cuál es la ubicación más óptima y eficiente dentro del <body> para colocar elementos <template> de HTML5, considerando el flujo de renderizado y el uso de JS para inyección dinámica?"
+   -Copilot (Haiku 4.5)
+   -Gemini (3.5 Flash)
 
-2. "Quiero crear en base al index.html un archivo javascript que aplique la lógica que se solicita en los comentarios, es decir agregar ingredientes de forma dinámica y recetas como los utilizados en roulette"
+### ¿Para qué las utilicé?
+   -Utilice Gemini para poder entender y/o repasar conceptos especificos, además de utilizarlo para tareas menores que no requerían tanta lógica detrás como un diseño basico para un boton o una recomendación en cuanto a ideas de funcionalidades.
+   -Copilot para optimizar tiempos de escritura de código, reduciendo el tiempo que estaba codeando y aumentando el tiempo en que se realizaban mejoras. Tambien para escribir lógica de cero que quizas no comprendía como realizarla pero que tenía la idea de como debía ser.
+   También utilice esta herramienta para corregir errores de semántica para optimizar y dejar más limpio al código.
 
-3. - Me gustaria que cuente con un login que sea opcional pero que al loggearse se puedan guardar recetas favoritas
+### ¿Qué partes del proyecto fueron asistidas por IA?
 
-4. - Puedes corregir el fallo de que siempre aparece logout y login juntos
+   Todos los archivos creados fueron asistidos con IA hasta cierto punto, por ejemplo el archivo index.html fue creado a mano por mi pero a medida que se fueron implementando más funcionalidades, fue siendo modificado a la par por la IA.
+   La única excepción seria este mismo archivo.
 
-5. - Agregá un modo oscuro que sea visible en cada pagina HTML con ícono de sol y Luna que cambien según que modo se encuentre la pagina
+### ¿Qué prompts o consultas me resultaron mas útiles?
 
-6. - Quiero que acomodes el modo oscuro para todos los html, así como el estilo agregado en el navbar, y que el contraste en el modo oscuro cumpla con los estándares WCAG, tratar de mantener todo con etiquetas semanticas
+#### Actúa como experto en desarrollo web. ¿Cuál es la ubicación más óptima y eficiente dentro del <body> para colocar elementos <template> de HTML5, considerando el flujo de renderizado y el uso de JS para inyección dinámica?"
+   - Cree el archivo index.html de forma manual pero me surgió una duda en cuanto al uso de las etiquetas <template> , puesto que mi idea era inyectar via DOM los ingredientes y recetas correspondientes.
+   El uso del prompt no solo me ayudo a agregar esta parte del trabajo sino que me enseño a futuro como manejar dicho caso.
 
-### Análisis del resultado obtenido
-
-
-1. Resultado del primer prompt:
-   - La IA recomendó colocarlos fuera del flujo principal del documento, idealmente antes del cierre de </body>, para mejorar el rendimiento y facilitar la inyección dinámica.
-
-2. Resultado del segundo prompt:
+#### "Quiero crear en base al index.html un archivo javascript que aplique la lógica que se solicita en los comentarios, es decir agregar ingredientes de forma dinámica y recetas como los utilizados en roulette"
+   Cumplió con lo esperado casi a la perfección, me ayudó a estructurar la lógica del index tomando como ejemplo la ruleta para que no ocurra divergencia de lógica y se cree lo mismo por segunda vez, se obtuvo:
    - Se crearon funciones para cargar ingredientes y recetas desde la estructura de datos del proyecto.
-   - Se añadió lógica JS para renderizar ingredientes y recetas en el DOM, de forma similar al comportamiento de la página roulette.
+   - Se añadió lógica JS para renderizar ingredientes y recetas en el DOM.
 
-3. Resultado del tercer prompt:
-    - Se planteó un sistema de autenticación opcional basado en almacenamiento local para que el usuario pueda guardar recetas favoritas.
+#### Me gustaria que cuente con un login que sea opcional pero que al loggearse se puedan guardar recetas favoritas
+   Una vez planteado la problemática y creado los archivos con una vaga lógica, le pedi a Copilot que termine de pulir los detalles y agregue permanencia con localStorage, así como autenticación que habiliten el uso de *favoritos*
+   - Se planteó un sistema de autenticación opcional basado en almacenamiento local para que el usuario pueda guardar recetas favoritas.
 
-4. Resultado del cuarto prompt:
-    - Se identificó y corrigió el problema del navbar mostrando ambos botones "login" y "logout" simultáneamente.
+#### Puedes corregir el fallo de que siempre aparece logout y login juntos
+   Seguido al prompt anterior, la respuesta que generó la IA no fue del todo precisa, puesto que si bien agregó la lógica faltaba mejorar el diseño, por lo que este prompt permitió solucionar esta problemática añadiendo lógica de estados.
 
-5. Resultado del quinto prompt:
-   - Se incorporó un selector de modo oscuro con íconos de sol y luna.
+#### Agregá un modo oscuro que sea visible en cada pagina HTML con ícono de sol y Luna que cambien según que modo se encuentre la pagina
+   Quise agregar un modo oscuro a la página para mejorar la accesibilidad y poder satisfacer a los usuarios que tengan preferencia por una gama de colores más oscuros.
+   - Se incorporó un selector de modo oscuro con íconos de sol y luna. Guardando en el localStorage el último modo seleccionado y se cambiaron los colores a un tono que contraste con el anterior modo claro, manteniendo el color negro como principal. Tambien se incluyó lógica que muestre un sol y una luna según el modo donde nos encontremos en dicho momento.
 
-6. Resultado del sexto prompt:
-   - Se aplicaron ajustes de estilo en todas las páginas y en el navbar, cuidando que el contraste cumpla con WCAG para mejorar la legibilidad.
+#### Quiero que acomodes el modo oscuro para todos los html, así como el estilo agregado en el navbar, y que el contraste en el modo oscuro cumpla con los estándares WCAG, tratar de mantener todo con etiquetas semanticas
+   El modo oscuro no se estaba estableciendo correctamente a todas las páginas html por lo que tuve que solicitarle una mejora tanto en accesibilidad como en color.
+   Se aplicaron ajustes de estilo en todas las páginas y en el navbar, asegurando que el contraste cumpla con WCAG para mejorar la legibilidad.
 
+### ¿Qué respuestas de la IA tuve que corregir?
 
-### Qué debí corregir manualmente y por qué
+   En el caso del segundo prompt solicitado mucha de la lógica utilizada reescribia código que ya estaba en otra parte del proyecto por lo que tuve que abstraer dicha lógica en archivos independientes e importarla a los demás archivos para centralizarlo.
 
+   Los elementos utilizados para representar inicio de sesion y cierre de sesion, se veian de manera simultanea.
+   Al generarse el login, los colores de los elementos que creó ya no cumplian con el contraste mínimo necesario para que se divise fácilmente, además que esta adición no funcionaba en la pagina Roulette.html.
 
-1. En este caso no tuve que corregir nada manualmente porque esta parte del código la desarrolle de forma manual para que la IA tenga una estructura especifica definida evitando así tener que hacer ajustes adicionales
+   El modo oscuro no funcionaba dentro de la página roulette.html por lo que junto con el login tuve que volver abstraer dicha lógica en archivos independientes, en este caso en cada pagina html. Además que muchos cambios de colores del modo oscuro tuvieron que ser ajustados para que cumplan con el mínimo de contraste para cumplir con los estándares WCAG.
 
-2. Mucha de la lógica utilizada reescribia código que ya estaba en otra parte del proyecto por lo que tuve que abstraer dicha lógica en archivos separados e importarla
+### ¿Qué problemas tuve al trabajar con IA?
 
-3. Los colores de los elementos que creó ya no cumplian con el contraste mínimo necesario para que se divise fácilmente.
-Esta adición no funcionaba en la pagina Roulette.html
+- Tuve problemas para expresar en palabras las ideas que tenía en mi cabezam muchas veces omitia detalles que quizas tiendo a obviar pero son necesarios en cuanto a un prompt de IA, esto trajo varios problemas en cuanto a Semantica y repetición de lógica utilizada en otra parte del proyecto.
+- Fuera de eso, la IA me generó la respuesta que esperaba luego de unos retoques, por lo que no considero que sea un problema tan grande pero si me inspira a mejorar mi escritura de prompts.
 
-4. Los elementos utilizados para representar inicio de sesion y cierre de sesion, se veian de manera simultanea solo si el usuario se loggeaba, por lo que tuve que ocultarlo según el estado en que se encontraba.
+### ¿Qué aprendí durante el proceso?
 
-5. El modo oscuro no funcionaba dentro de la página roulette.html por lo que junto con el login tuve que abstraer dicha lógica en archivos independientes para luego importalo donde correspondan, en este caso en cada pagina html. Además que muchos cambios de colores tuvieron que ser ajustados para que cumplan con el mínimo de contraste para cumplir con los estándares WCAG
+- Aprendí gracias a las clases de manejo de IA y a la práctica que lo mejor es que luego de cada seccion trabajada se borre el contexto anterior porque a diferencia de mejorar, puede llegar a alucinar bastante omitiendo incluso detalles solicitados en el mismo prompt.
+- Recorde y aprendí varios conceptos de javaScript que no utilizaba hace bastante tiempo y pude mejorarlos con ayuda y explicación de la IA.
+- Comprendi de mejor manera que la IA es una herramienta que puede agilizar muchisimo en trabajo pero que depende también mucho en que manos se encuentre, porque incluso con prompts bien definidos, puede llegar a cometer errores y uno mismo tiene que identificarlos y mejorarlos.
+- Pude utilizar por primera vez un agente de IA y descubrí que es una gran mejora comparado con los chats, pero que a la vez requiere de un cuidado mucho mayor puesto que tiene acceso a partes mucho más delicadas y puede cometer errores irreversibles si no se tienen en cuenta (como commits automaticos).
 
-6. En este caso no tuve que corregir nada, devolvió justo lo que estaba esperando en el momento
+### ¿Qué partes del código puedo explicar?
 
-## Reflexión final
+- Las páginas index.html, roulette.html, about-us.html, contact.html
+- Los estilos de las mismas, así como el modo oscuro incluido en cada una
+- Scripts del modo oscuro, login, traductor
 
-- Es esencial revisar manualmente los resultados para evitar que la IA introduzca contenido irrelevante o estructure mal el archivo.
-- La mejor aportación es la capacidad humana de revisar, corregir y dar contexto técnico preciso a lo generado por la IA.
+### ¿Qué decisiones tomamos como grupo sin depender de la IA?
 
+- Primeramente planteamos la idea general del proyecto por meet y incluimos todas las posibles ideas y borradores en un pdf, luego nos fuimos manejando mediante el uso de whatsapp para coordinar cambios y Trello para registrar los avances plasmandolos en 3 columnas que determinaban su estado y el responsable (pendiente, en curso (responsable) , finalizado(por quien))
+
+### ¿Hubo código sugerido por IA que descarté? ¿Por qué?
+
+- Hubo código que no llevaba a la solución que yo esperaba y código que se iba por las ramas y sugeria alternativas con frameworks.
+- Tuvimos un caso que fue el uso de la API [API](https://www.themealdb.com/api/json/v1/1), donde algunas imágenes e ingredientes de la API no concordaban con la receta, por lo que decidimos reemplazar partes de las recetas y sus imágenes con otras encontradas por internet y también las sugeridas por la IA.
+Luego borramos los archivos que solo tenían como función utilizar esta API y proveerla a los demás, de los cuales también se quitó todo rastro de ella.
 
 ## Jonatan Luque
 ### ¿Qué herramientas de IA utilicé?
