@@ -1,13 +1,13 @@
 import { getRecipes, getIngredients, getFilters, saveFilters, saveToHistory } from './storage.js';
 import { initLang } from './lang.js';
 import { t } from './translator/translator.js';
-import { initChrome } from './ui.js';
+import { initChrome, showToast } from './ui.js';
 import { createAutocomplete } from './autocomplete.js';
 import { applyFilters } from './filters.js';
 
 // Inyecta navbar + footer + modal de login y cablea tema/auth (una sola llamada)
 initChrome({ active: 'roulette' });
-initLang();
+initLang(() => { if (wheel) updateWheel(); });
 
 // ── Colores de los segmentos (tonos vibrantes, comida) ───────────
 const SEGMENT_COLORS = [
@@ -201,8 +201,18 @@ class RouletteWheel {
 
 // ── Gestor de tags ───────────────────────────────────────────────
 
-function createTagManager(listEl, inputEl, addBtnEl, ingredientsList = []) {
+function createTagManager(listEl, inputEl, addBtnEl, ingredientsList = [], onChange = null) {
   const tags = new Set();
+  const validSet = ingredientsList.length > 0
+    ? new Set(ingredientsList.map(i => i.toLowerCase()))
+    : null;
+
+  // mapa traducción → clave inglés (para aceptar input en español)
+  const translatedMap = new Map();
+  ingredientsList.forEach(ing => {
+    const translated = t(ing).toLowerCase();
+    if (translated !== ing.toLowerCase()) translatedMap.set(translated, ing.toLowerCase());
+  });
 
   if (ingredientsList.length > 0) {
     createAutocomplete(inputEl, ingredientsList);
@@ -212,8 +222,15 @@ function createTagManager(listEl, inputEl, addBtnEl, ingredientsList = []) {
   }
 
   function add(value) {
-    const v = value.trim().toLowerCase();
-    if (!v || tags.has(v)) return;
+    let v = value.trim().toLowerCase();
+    if (!v) return;
+    // normalizar: si tipea en español, resolver a la clave inglés
+    if (validSet && !validSet.has(v) && translatedMap.has(v)) v = translatedMap.get(v);
+    if (tags.has(v)) return;
+    if (validSet && !validSet.has(v)) {
+      showToast(t('Ingredient not found. Try the suggestions.'));
+      return;
+    }
     tags.add(v);
 
     const li   = document.createElement('li');
@@ -229,11 +246,12 @@ function createTagManager(listEl, inputEl, addBtnEl, ingredientsList = []) {
     btn.className   = 'remove-btn';
     btn.textContent = '×';
     btn.setAttribute('aria-label', `${t('Remove')} ${t(v)}`);
-    btn.addEventListener('click', () => { tags.delete(v); li.remove(); });
+    btn.addEventListener('click', () => { tags.delete(v); li.remove(); onChange?.(); });
 
     li.append(span, btn);
     listEl.appendChild(li);
     if (inputEl) inputEl.value = '';
+    onChange?.();
   }
 
   inputEl?.addEventListener('keydown', (e) => {
@@ -262,13 +280,15 @@ async function init() {
     document.getElementById('include-tags'),
     document.getElementById('include-input'),
     document.getElementById('include-add-btn'),
-    ingredients
+    ingredients,
+    updateWheel
   );
   excludeMgr = createTagManager(
     document.getElementById('exclude-tags'),
     document.getElementById('exclude-input'),
     document.getElementById('exclude-add-btn'),
-    ingredients
+    ingredients,
+    updateWheel
   );
 
   setupFilters();
@@ -341,7 +361,6 @@ function setupFilters() {
     if (lbl) lbl.textContent = countEl.value;
   });
 
-  document.getElementById('apply-filters-btn')?.addEventListener('click', updateWheel);
 }
 
 function restoreFilters() {

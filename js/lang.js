@@ -1,21 +1,20 @@
 import { getLang, setLang, loadDictionary, translatePage } from './translator/translator.js';
 
-async function toggleLang() {
-  const next = getLang() === 'en' ? 'es' : 'en';
-  setLang(next);
+async function initLang(onAfterTranslate = null) {
   await loadDictionary();
   translatePage();
-  const btn = document.getElementById('lang-toggle');
-  if (btn) btn.textContent = next === 'en' ? 'ES' : 'EN';
-}
-
-async function initLang() {
-  await loadDictionary();
-  translatePage();
+  onAfterTranslate?.();
   const btn = document.getElementById('lang-toggle');
   if (!btn) return;
   btn.textContent = getLang() === 'en' ? 'ES' : 'EN';
-  btn.addEventListener('click', toggleLang);
+  btn.addEventListener('click', async () => {
+    const next = getLang() === 'en' ? 'es' : 'en';
+    setLang(next);
+    await loadDictionary();
+    translatePage();
+    onAfterTranslate?.();
+    btn.textContent = next === 'en' ? 'ES' : 'EN';
+  });
 }
 
 export { initLang };

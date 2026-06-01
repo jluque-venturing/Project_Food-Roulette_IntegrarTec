@@ -80,7 +80,6 @@ export default {
   "e.g. chicken, rice…": "ej. pollo, arroz…",
   "Exclude ingredients": "Excluir ingredientes",
   "e.g. nuts, shellfish…": "ej. nueces, mariscos…",
-  "Apply Filters": "Aplicar filtros",
   "Today's food is…": "Hoy comemos…",
   "▶ Spin again": "▶ Girar de nuevo",
   "View full recipe": "Ver receta completa",
@@ -453,6 +452,7 @@ export default {
   "Change language": "Cambiar idioma",
   "User account": "Cuenta de usuario",
   "Ingredient": "Ingrediente",
+  "Ingredient not found. Try the suggestions.": "Ingrediente no encontrado. Probá las sugerencias.",
   "Add to favorites": "Agregar a favoritos",
   "Remove from favorites": "Quitar de favoritos",
 
